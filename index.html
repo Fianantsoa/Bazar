@@ -239,56 +239,96 @@
 <section id="pricing" class="section-pricing" aria-labelledby="pricing-heading">
   <div class="container">
     <h2 id="pricing-heading" class="section-title" data-i18n="pricing_title">Des prix adaptés à Madagascar</h2>
-    <p class="section-sub" data-i18n="pricing_sub">Commence gratuitement, monte en gamme quand tu es prêt</p>
+    <p class="section-sub" data-i18n="pricing_sub">14 jours gratuits — toutes fonctionnalités — aucune carte requise</p>
+
+    <!-- Timeline -->
+    <div class="pricing-timeline" role="list" aria-label="Étapes de l'essai gratuit">
+      <div class="ptl-step" role="listitem">
+        <div class="ptl-dot ptl-trial" aria-hidden="true">1</div>
+        <div class="ptl-label" data-i18n="ptl_1_label">Inscription</div>
+        <div class="ptl-sub" data-i18n="ptl_1_sub">Gratuite, sans carte</div>
+      </div>
+      <div class="ptl-arrow" aria-hidden="true">→</div>
+      <div class="ptl-step" role="listitem">
+        <div class="ptl-dot ptl-trial" aria-hidden="true">2</div>
+        <div class="ptl-label" data-i18n="ptl_2_label">14 jours d'essai</div>
+        <div class="ptl-sub" data-i18n="ptl_2_sub">Accès Pro complet</div>
+      </div>
+      <div class="ptl-arrow" aria-hidden="true">→</div>
+      <div class="ptl-step" role="listitem">
+        <div class="ptl-dot ptl-remind" aria-hidden="true">3</div>
+        <div class="ptl-label" data-i18n="ptl_3_label">Email rappel J−3</div>
+        <div class="ptl-sub" data-i18n="ptl_3_sub">Avant la fin</div>
+      </div>
+      <div class="ptl-arrow" aria-hidden="true">→</div>
+      <div class="ptl-step" role="listitem">
+        <div class="ptl-dot ptl-paid" aria-hidden="true">4</div>
+        <div class="ptl-label" data-i18n="ptl_4_label">Jour 15 → Starter</div>
+        <div class="ptl-sub" data-i18n="ptl_4_sub">Résiliable à tout moment</div>
+      </div>
+    </div>
+
     <div class="plans-grid">
 
-      <article class="plan" data-reveal aria-label="Plan Gratuit">
-        <div class="plan-name" data-i18n="free_name">GRATUIT</div>
-        <div class="plan-price" data-i18n="free_price">0 Ar</div>
-        <div class="plan-period" data-i18n="free_period">/ mois — pour toujours</div>
-        <p class="plan-desc" data-i18n="free_desc">Idéal pour tester et débuter</p>
+      <!-- ESSAI -->
+      <article class="plan plan-trial" data-reveal aria-label="Essai gratuit 14 jours">
+        <div class="plan-trial-badge" data-i18n="trial_badge">ESSAI GRATUIT</div>
+        <div class="plan-price" data-i18n="trial_price">0 Ar</div>
+        <div class="plan-period" data-i18n="trial_period">pendant 14 jours</div>
+        <p class="plan-desc" data-i18n="trial_desc">Toutes les fonctionnalités Pro débloquées. Aucune carte bancaire requise.</p>
         <ul class="plan-features">
-          <li data-i18n="free_li1">Jusqu'à 10 produits</li>
-          <li data-i18n="free_li2">Page vitrine boutique</li>
-          <li data-i18n="free_li3">Formulaire de commande</li>
-          <li data-i18n="free_li4">Liens partageables</li>
+          <li data-i18n="trial_li1">Produits illimités</li>
+          <li data-i18n="trial_li2">QR codes + catalogue PDF</li>
+          <li data-i18n="trial_li3">WhatsApp + notifications</li>
+          <li data-i18n="trial_li4">Analytics complets</li>
+          <li data-i18n="trial_li5">Variantes produit</li>
+          <li data-i18n="trial_li6">Export CSV</li>
         </ul>
-        <button class="btn btn-plan-ghost" data-i18n="free_cta" onclick="scrollToSignup()">Commencer gratuitement</button>
+        <button class="btn btn-plan-gold" data-i18n="trial_cta" onclick="scrollToSignup()">Commencer l'essai gratuit →</button>
       </article>
 
-      <article class="plan plan-featured" data-reveal style="--delay:80ms" aria-label="Plan Starter — recommandé">
-        <div class="plan-popular-badge" data-i18n="popular_badge">Le plus populaire</div>
+      <!-- STARTER -->
+      <article class="plan plan-featured" data-reveal style="--delay:80ms" aria-label="Plan Starter — automatique après l'essai">
+        <div class="plan-popular-badge" data-i18n="starter_auto_badge">Automatique après l'essai</div>
         <div class="plan-name" data-i18n="starter_name">STARTER</div>
         <div class="plan-price" data-i18n="starter_price">5 000 Ar</div>
         <div class="plan-period" data-i18n="starter_period">/ mois</div>
-        <p class="plan-desc" data-i18n="starter_desc">Pour les vendeurs qui veulent scaler</p>
+        <p class="plan-desc" data-i18n="starter_desc">Plan par défaut à la fin de l'essai. Résiliable à tout moment.</p>
         <ul class="plan-features">
           <li data-i18n="starter_li1">Jusqu'à 50 produits</li>
           <li data-i18n="starter_li2">QR codes produits</li>
           <li data-i18n="starter_li3">Notifications WhatsApp</li>
           <li data-i18n="starter_li4">Analytics basiques</li>
           <li data-i18n="starter_li5">Export CSV des commandes</li>
+          <li class="plan-li-muted" data-i18n="starter_li6">Catalogue PDF (Pro)</li>
+          <li class="plan-li-muted" data-i18n="starter_li7">Variantes produit (Pro)</li>
         </ul>
-        <button class="btn btn-plan-featured" data-i18n="starter_cta" onclick="scrollToSignup()">Choisir Starter</button>
+        <button class="btn btn-plan-featured" data-i18n="starter_cta" onclick="scrollToSignup()">Plan par défaut</button>
       </article>
 
+      <!-- PRO -->
       <article class="plan" data-reveal style="--delay:160ms" aria-label="Plan Pro">
         <div class="plan-name" data-i18n="pro_name">PRO</div>
         <div class="plan-price" data-i18n="pro_price">15 000 Ar</div>
         <div class="plan-period" data-i18n="pro_period">/ mois</div>
-        <p class="plan-desc" data-i18n="pro_desc">Pour boutiques à fort volume</p>
+        <p class="plan-desc" data-i18n="pro_desc">Pour boutiques à fort volume. Upgrade depuis Starter à tout moment.</p>
         <ul class="plan-features">
           <li data-i18n="pro_li1">Produits illimités</li>
           <li data-i18n="pro_li2">Catalogue PDF automatique</li>
           <li data-i18n="pro_li3">Variantes taille / couleur</li>
           <li data-i18n="pro_li4">Panier multi-produit</li>
-          <li data-i18n="pro_li5">Support prioritaire</li>
+          <li data-i18n="pro_li5">Historique client auto</li>
+          <li data-i18n="pro_li6">Support prioritaire</li>
         </ul>
         <button class="btn btn-plan-ghost" data-i18n="pro_cta" onclick="scrollToSignup()">Passer à Pro</button>
       </article>
 
     </div>
-    <p class="pricing-note" data-i18n="pricing_note">Aucune carte bancaire requise pour commencer · Paiement à la livraison pour tes clients</p>
+
+    <div class="pricing-notice" role="note">
+      <span class="pricing-notice-icon" aria-hidden="true">ℹ</span>
+      <span data-i18n="pricing_note">Après les 14 jours d'essai, le compte passe automatiquement au plan Starter (5 000 Ar/mois). Un email de rappel est envoyé 3 jours avant. Résiliation possible à tout moment depuis le tableau de bord — sans frais.</span>
+    </div>
   </div>
 </section>
 
