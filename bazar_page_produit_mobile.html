@@ -1,0 +1,353 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#1E2D3D;
+  --gold:#F5A623;
+  --sand:#F5F5F0;
+  --slate:#6B7A8D;
+  --white:#fff;
+}
+.phone-wrap{
+  display:flex;justify-content:center;padding:1.5rem 0;
+}
+.phone{
+  width:360px;min-height:700px;
+  background:var(--sand);
+  border-radius:28px;
+  border:0.5px solid var(--color-border-secondary);
+  overflow:hidden;
+  font-family:'DM Sans',sans-serif;
+  position:relative;
+}
+.topbar{
+  background:var(--white);
+  padding:12px 16px;
+  display:flex;align-items:center;gap:10px;
+  border-bottom:0.5px solid #e5e5e0;
+  position:sticky;top:0;z-index:10;
+}
+.topbar .back{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--sand);
+  display:flex;align-items:center;justify-content:center;
+  border:none;cursor:pointer;
+}
+.topbar .back i{font-size:16px;color:var(--navy);}
+.topbar .share{
+  margin-left:auto;
+  width:32px;height:32px;border-radius:50%;
+  background:var(--sand);
+  display:flex;align-items:center;justify-content:center;
+  border:none;cursor:pointer;
+}
+.topbar .share i{font-size:16px;color:var(--navy);}
+.gallery{
+  position:relative;
+  background:var(--white);
+  height:240px;
+  overflow:hidden;
+}
+.gallery-img{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#f0ece4 0%,#e8e2d8 100%);
+  font-size:64px;
+  color:#c4b89a;
+}
+.gallery-dots{
+  position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
+  display:flex;gap:6px;
+}
+.dot{width:6px;height:6px;border-radius:3px;background:rgba(30,45,61,0.2);}
+.dot.active{width:18px;background:var(--gold);}
+.badge-stock{
+  position:absolute;top:12px;right:12px;
+  background:var(--navy);color:var(--white);
+  font-size:11px;font-weight:500;
+  padding:4px 10px;border-radius:20px;
+}
+.content{padding:16px;}
+.seller-row{
+  display:flex;align-items:center;gap:8px;
+  margin-bottom:12px;
+}
+.seller-avatar{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:500;color:var(--navy);
+}
+.seller-name{font-size:13px;color:var(--slate);}
+.seller-name span{color:var(--navy);font-weight:500;}
+.product-title{
+  font-family:'Playfair Display',serif;
+  font-size:20px;color:var(--navy);
+  line-height:1.3;margin-bottom:8px;
+}
+.price-row{
+  display:flex;align-items:baseline;gap:10px;margin-bottom:14px;
+}
+.price{font-size:22px;font-weight:500;color:var(--navy);}
+.price-old{font-size:14px;color:var(--slate);text-decoration:line-through;}
+.desc{
+  font-size:13px;color:var(--slate);line-height:1.6;
+  margin-bottom:16px;
+}
+.variants-label{font-size:12px;color:var(--slate);margin-bottom:8px;}
+.variants{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.variant{
+  padding:5px 14px;border-radius:20px;
+  border:0.5px solid #d0cfc8;
+  font-size:13px;color:var(--navy);
+  cursor:pointer;background:var(--white);
+  transition:all .15s;
+}
+.variant.sel{
+  background:var(--navy);color:var(--white);border-color:var(--navy);
+}
+.qty-row{
+  display:flex;align-items:center;gap:12px;margin-bottom:16px;
+}
+.qty-label{font-size:13px;color:var(--slate);}
+.qty-ctrl{
+  display:flex;align-items:center;gap:0;
+  border:0.5px solid #d0cfc8;border-radius:8px;overflow:hidden;background:var(--white);
+}
+.qty-btn{
+  width:32px;height:32px;border:none;background:transparent;
+  font-size:18px;color:var(--navy);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.qty-val{
+  width:32px;text-align:center;font-size:14px;font-weight:500;color:var(--navy);
+  border-left:0.5px solid #d0cfc8;border-right:0.5px solid #d0cfc8;
+  line-height:32px;
+}
+.cta-area{
+  display:flex;gap:10px;margin-bottom:16px;
+}
+.btn-order{
+  flex:1;padding:12px;border-radius:12px;
+  background:var(--gold);color:var(--navy);
+  font-size:15px;font-weight:500;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:transform .1s;
+}
+.btn-order:active{transform:scale(.97);}
+.btn-wa{
+  width:48px;height:48px;border-radius:12px;
+  background:#25D366;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:22px;
+  flex-shrink:0;
+}
+.divider{height:0.5px;background:#e5e5e0;margin:16px 0;}
+.section-title{font-size:12px;font-weight:500;color:var(--slate);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;}
+.seller-card{
+  display:flex;align-items:center;gap:12px;
+  background:var(--white);border-radius:12px;
+  padding:12px;border:0.5px solid #e5e5e0;
+}
+.seller-logo{
+  width:44px;height:44px;border-radius:10px;
+  background:var(--navy);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);
+  flex-shrink:0;
+}
+.seller-info{flex:1;}
+.seller-shop{font-size:14px;font-weight:500;color:var(--navy);}
+.seller-sub{font-size:12px;color:var(--slate);}
+.btn-voir{
+  font-size:12px;color:var(--navy);
+  border:0.5px solid #d0cfc8;border-radius:20px;
+  padding:4px 12px;background:transparent;cursor:pointer;
+  white-space:nowrap;
+}
+.other-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-bottom:80px;}
+.mini-card{
+  background:var(--white);border-radius:10px;
+  border:0.5px solid #e5e5e0;overflow:hidden;cursor:pointer;
+}
+.mini-img{
+  height:80px;
+  display:flex;align-items:center;justify-content:center;
+  background:#f0ece4;font-size:30px;color:#c4b89a;
+}
+.mini-info{padding:8px;}
+.mini-name{font-size:12px;color:var(--navy);font-weight:500;margin-bottom:2px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mini-price{font-size:13px;color:var(--gold);font-weight:500;}
+.sticky-bar{
+  position:sticky;bottom:0;
+  background:var(--white);border-top:0.5px solid #e5e5e0;
+  padding:10px 16px;
+  display:flex;gap:10px;
+}
+.sticky-order{
+  flex:1;padding:12px;border-radius:12px;
+  background:var(--gold);color:var(--navy);
+  font-size:14px;font-weight:500;border:none;cursor:pointer;
+}
+.sticky-wa{
+  width:46px;height:46px;border-radius:12px;
+  background:#25D366;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:20px;
+}
+.copy-link{
+  display:flex;align-items:center;gap:8px;
+  background:var(--white);border-radius:10px;
+  border:0.5px solid #e5e5e0;padding:10px 12px;
+  margin-bottom:16px;cursor:pointer;
+}
+.copy-url{font-size:11px;color:var(--slate);flex:1;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.copy-btn{
+  font-size:11px;font-weight:500;color:var(--navy);
+  background:var(--sand);padding:4px 10px;border-radius:6px;
+  border:none;cursor:pointer;white-space:nowrap;
+}
+</style>
+
+<h2 class="sr-only">Maquette page produit publique Bazar.app — vue mobile client</h2>
+
+<div class="phone-wrap">
+<div class="phone">
+
+  <div class="topbar">
+    <button class="back" aria-label="Retour"><i class="ti ti-arrow-left" aria-hidden="true"></i></button>
+    <span style="font-size:14px;font-weight:500;color:var(--navy);flex:1;text-align:center;">Détail produit</span>
+    <button class="share" aria-label="Partager"><i class="ti ti-share" aria-hidden="true"></i></button>
+  </div>
+
+  <div class="gallery">
+    <div class="gallery-img"><i class="ti ti-shirt" aria-hidden="true"></i></div>
+    <div class="badge-stock">12 disponibles</div>
+    <div class="gallery-dots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="seller-row">
+      <div class="seller-avatar">MF</div>
+      <div class="seller-name">Vendu par <span>Mode Fashion MG</span></div>
+    </div>
+
+    <div class="product-title">Robe Fleurie Été — Coton Doux</div>
+
+    <div class="price-row">
+      <span class="price">45 000 Ar</span>
+      <span class="price-old">55 000 Ar</span>
+    </div>
+
+    <p class="desc">Robe légère en coton 100% naturel. Imprimé fleuri exclusif. Parfaite pour les sorties estivales. Lavage en machine 30°C.</p>
+
+    <div class="variants-label">Taille</div>
+    <div class="variants">
+      <button class="variant" onclick="selectVariant(this,'taille')">XS</button>
+      <button class="variant sel" onclick="selectVariant(this,'taille')">S</button>
+      <button class="variant" onclick="selectVariant(this,'taille')">M</button>
+      <button class="variant" onclick="selectVariant(this,'taille')">L</button>
+      <button class="variant" onclick="selectVariant(this,'taille')">XL</button>
+    </div>
+
+    <div class="variants-label">Couleur</div>
+    <div class="variants">
+      <button class="variant sel" onclick="selectVariant(this,'couleur')">Rose poudré</button>
+      <button class="variant" onclick="selectVariant(this,'couleur')">Blanc cassé</button>
+      <button class="variant" onclick="selectVariant(this,'couleur')">Bleu ciel</button>
+    </div>
+
+    <div class="qty-row">
+      <span class="qty-label">Quantité</span>
+      <div class="qty-ctrl">
+        <button class="qty-btn" onclick="changeQty(-1)" aria-label="Moins">−</button>
+        <span class="qty-val" id="qty">1</span>
+        <button class="qty-btn" onclick="changeQty(1)" aria-label="Plus">+</button>
+      </div>
+    </div>
+
+    <div class="cta-area">
+      <button class="btn-order" onclick="sendPrompt('Affiche moi le formulaire de commande Bazar')">
+        <i class="ti ti-shopping-cart" aria-hidden="true"></i> Commander maintenant
+      </button>
+      <button class="btn-wa" aria-label="WhatsApp vendeur">
+        <i class="ti ti-brand-whatsapp" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <div class="copy-link">
+      <i class="ti ti-link" style="font-size:14px;color:var(--slate);" aria-hidden="true"></i>
+      <span class="copy-url">bazar.app/p/Rb7xQ</span>
+      <button class="copy-btn" onclick="this.textContent='Copié !'">Copier</button>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-title">La boutique</div>
+
+    <div class="seller-card">
+      <div class="seller-logo">B</div>
+      <div class="seller-info">
+        <div class="seller-shop">Mode Fashion MG</div>
+        <div class="seller-sub">48 produits · Antananarivo</div>
+      </div>
+      <button class="btn-voir">Voir tout</button>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-title">Autres produits</div>
+
+    <div class="other-grid">
+      <div class="mini-card">
+        <div class="mini-img"><i class="ti ti-outfit" aria-hidden="true"></i></div>
+        <div class="mini-info"><div class="mini-name">Jupe Plissée</div><div class="mini-price">32 000 Ar</div></div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-img"><i class="ti ti-hanger" aria-hidden="true"></i></div>
+        <div class="mini-info"><div class="mini-name">Blouse Dentelle</div><div class="mini-price">38 000 Ar</div></div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-img"><i class="ti ti-mood-smile" aria-hidden="true"></i></div>
+        <div class="mini-info"><div class="mini-name">Robe Soirée</div><div class="mini-price">78 000 Ar</div></div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-img"><i class="ti ti-star" aria-hidden="true"></i></div>
+        <div class="mini-info"><div class="mini-name">Top Brodé</div><div class="mini-price">28 000 Ar</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sticky-bar">
+    <button class="sticky-order" onclick="sendPrompt('Affiche moi le formulaire de commande Bazar')">
+      <i class="ti ti-shopping-cart" aria-hidden="true"></i> Commander — 45 000 Ar
+    </button>
+    <button class="sticky-wa" aria-label="WhatsApp">
+      <i class="ti ti-brand-whatsapp" aria-hidden="true"></i>
+    </button>
+  </div>
+
+</div>
+</div>
+
+<script>
+let qty = 1;
+function changeQty(d) {
+  qty = Math.max(1, Math.min(10, qty + d));
+  document.getElementById('qty').textContent = qty;
+  const price = 45000 * qty;
+  document.querySelector('.sticky-order').innerHTML = '<i class="ti ti-shopping-cart" aria-hidden="true"></i> Commander — ' + price.toLocaleString('fr-MG') + ' Ar';
+}
+function selectVariant(el, group) {
+  el.closest('.variants').querySelectorAll('.variant').forEach(v => v.classList.remove('sel'));
+  el.classList.add('sel');
+}
+</script>
