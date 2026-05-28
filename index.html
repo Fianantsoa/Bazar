@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Bazar.app — Ta boutique en ligne en 5 minutes</title>
+  <meta name="description" content="Crée ta boutique en ligne, partage tes produits sur Facebook et TikTok, reçois tes commandes de façon organisée. Gratuit pour commencer."/>
+  <!-- Open Graph -->
+  <meta property="og:title" content="Bazar.app — Ta boutique en 5 minutes"/>
+  <meta property="og:description" content="Vends sur Facebook et TikTok avec ta propre boutique en ligne professionnelle."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:locale" content="fr_MG"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- ═══════════════ TOPBAR ═══════════════ -->
+<header class="topbar" role="banner">
+  <div class="container topbar-inner">
+    <a class="brand" href="#" aria-label="Bazar.app — retour à l'accueil">
+      <div class="logo-mark" aria-hidden="true">B</div>
+      <span class="brand-name">bazar<small class="brand-dot">.app</small></span>
+    </a>
+    <nav class="nav-actions" aria-label="Navigation principale">
+      <button class="btn btn-lang" type="button" aria-label="Changer de langue" data-lang-switch>EN</button>
+      <div class="desktop-actions">
+        <a href="#how" class="btn btn-ghost" data-i18n="nav_how">Comment ça marche</a>
+        <a href="#pricing" class="btn btn-ghost" data-i18n="nav_pricing">Tarifs</a>
+        <button class="btn btn-cta" data-i18n="nav_start" onclick="scrollToSignup()">Démarrer</button>
+      </div>
+      <details class="mobile-menu">
+        <summary class="btn btn-ghost" aria-label="Menu">☰</summary>
+        <div class="mobile-panel">
+          <a href="#how" class="btn btn-ghost" data-i18n="nav_how">Comment ça marche</a>
+          <a href="#pricing" class="btn btn-ghost" data-i18n="nav_pricing">Tarifs</a>
+          <button class="btn btn-cta" data-i18n="nav_start" onclick="scrollToSignup()">Démarrer</button>
+        </div>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="container hero-inner">
+
+    <div class="hero-content">
+      <div class="hero-badge" data-reveal style="--delay:80ms" data-i18n="hero_badge">MADAGASCAR &amp; AFRIQUE</div>
+      <h1 id="hero-heading" class="hero-title" data-reveal style="--delay:140ms">
+        <span data-i18n="hero_title_1">Ta boutique en ligne.</span><br>
+        <em data-i18n="hero_title_2">Un lien.</em>
+        <span data-i18n="hero_title_3"> C'est tout.</span>
+      </h1>
+      <p class="hero-sub" data-reveal style="--delay:200ms" data-i18n="hero_sub">
+        Crée ta boutique en 5 minutes. Partage tes produits sur Facebook et TikTok. Reçois tes commandes de façon organisée — sans caisse, sans stress.
+      </p>
+      <div class="hero-ctas" data-reveal style="--delay:260ms">
+        <button class="btn btn-cta btn-lg" data-i18n="hero_cta1" onclick="scrollToSignup()">Créer ma boutique — c'est gratuit</button>
+        <button class="btn btn-outline-white btn-lg" data-i18n="hero_cta2" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">Voir comment ça marche</button>
+      </div>
+      <div class="hero-stats" data-reveal style="--delay:340ms" aria-label="Chiffres clés">
+        <div class="stat">
+          <div class="stat-n" data-i18n="stat_1n">5 min</div>
+          <div class="stat-l" data-i18n="stat_1l">Pour ouvrir ta boutique</div>
+        </div>
+        <div class="stat-sep" aria-hidden="true"></div>
+        <div class="stat">
+          <div class="stat-n" data-i18n="stat_2n">0 Ar</div>
+          <div class="stat-l" data-i18n="stat_2l">Pour commencer</div>
+        </div>
+        <div class="stat-sep" aria-hidden="true"></div>
+        <div class="stat">
+          <div class="stat-n" data-i18n="stat_3n">1 lien</div>
+          <div class="stat-l" data-i18n="stat_3l">À partager partout</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mockup Card -->
+    <aside class="hero-mockup" data-reveal style="--delay:420ms" aria-label="Aperçu de l'interface">
+      <div class="mockup-card">
+        <div class="mockup-header">
+          <div class="mockup-avatar" aria-hidden="true">R</div>
+          <div>
+            <div class="mockup-shop-name">Boutique Rachna</div>
+            <div class="mockup-shop-sub">45 produits · En ligne</div>
+          </div>
+          <div class="mockup-badge-live" aria-label="Boutique en ligne">●&nbsp;Live</div>
+        </div>
+        <div class="mockup-product">
+          <div class="mockup-img" aria-hidden="true">
+            <div class="mockup-img-placeholder">👗</div>
+          </div>
+          <div class="mockup-product-info">
+            <div class="mockup-product-name">Robe Sakalava Premium</div>
+            <div class="mockup-product-price">45 000 Ar</div>
+            <div class="mockup-product-link">
+              <span class="link-icon" aria-hidden="true">🔗</span>
+              <span class="link-text">bazar.app/p/Ab3kZ</span>
+              <button class="copy-btn" aria-label="Copier le lien" onclick="this.textContent='✓';setTimeout(()=>this.textContent='Copier',1200)">Copier</button>
+            </div>
+          </div>
+        </div>
+        <div class="mockup-orders">
+          <div class="mockup-orders-label">Commandes aujourd'hui</div>
+          <div class="mockup-orders-row">
+            <span class="order-dot new" aria-hidden="true"></span>
+            <span>Haingo M. · Robe Sakalava</span>
+            <span class="order-status new">Nouvelle</span>
+          </div>
+          <div class="mockup-orders-row">
+            <span class="order-dot confirmed" aria-hidden="true"></span>
+            <span>Vola R. · T-shirt Premium</span>
+            <span class="order-status confirmed">Confirmée</span>
+          </div>
+          <div class="mockup-orders-row">
+            <span class="order-dot delivered" aria-hidden="true"></span>
+            <span>Fanja T. · Sac cuir</span>
+            <span class="order-status delivered">Livrée</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- Logos sociaux -->
+  <div class="hero-social-proof" aria-label="Plateformes compatibles">
+    <span class="proof-label" data-i18n="proof_label">Partageable sur</span>
+    <div class="proof-chips">
+      <span class="chip">📘 Facebook</span>
+      <span class="chip">🎵 TikTok</span>
+      <span class="chip">💬 WhatsApp</span>
+      <span class="chip">📸 Instagram</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ HOW IT WORKS ═══════════════ -->
+<section id="how" class="section-how" aria-labelledby="how-heading">
+  <div class="container">
+    <h2 id="how-heading" class="section-title" data-i18n="how_title">Comment ça marche</h2>
+    <p class="section-sub" data-i18n="how_sub">Trois étapes pour commencer à vendre</p>
+    <div class="steps-grid">
+      <div class="step-card" data-reveal>
+        <div class="step-num" aria-hidden="true">1</div>
+        <h3 data-i18n="step1_title">Crée ta boutique</h3>
+        <p data-i18n="step1_desc">Inscription en 2 minutes. Ajoute ton logo, ta description et ton numéro WhatsApp. Ta boutique a son URL unique.</p>
+      </div>
+      <div class="step-arrow" aria-hidden="true">→</div>
+      <div class="step-card" data-reveal style="--delay:80ms">
+        <div class="step-num" aria-hidden="true">2</div>
+        <h3 data-i18n="step2_title">Ajoute tes produits</h3>
+        <p data-i18n="step2_desc">Photos, prix, stock. Chaque produit génère un lien court et un QR code prêt à partager.</p>
+      </div>
+      <div class="step-arrow" aria-hidden="true">→</div>
+      <div class="step-card" data-reveal style="--delay:160ms">
+        <div class="step-num" aria-hidden="true">3</div>
+        <h3 data-i18n="step3_title">Reçois tes commandes</h3>
+        <p data-i18n="step3_desc">Les clients commandent via un formulaire simple. Tu vois tout dans ton tableau de bord et tu les contactes en un clic.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FEATURES ═══════════════ -->
+<section class="section-features" aria-labelledby="feat-heading">
+  <div class="container">
+    <h2 id="feat-heading" class="section-title" data-i18n="feat_title">Tout ce qu'il te faut</h2>
+    <p class="section-sub" data-i18n="feat_sub">Des outils pensés pour les vendeurs de réseaux sociaux</p>
+    <div class="feat-grid">
+      <div class="feat-card" data-reveal>
+        <div class="feat-icon" aria-hidden="true">🔗</div>
+        <h4 data-i18n="feat1_title">Liens partageables</h4>
+        <p data-i18n="feat1_desc">Un lien court par produit. Copié en un clic pour Facebook, TikTok ou WhatsApp. Belle prévisualisation automatique.</p>
+      </div>
+      <div class="feat-card" data-reveal style="--delay:60ms">
+        <div class="feat-icon" aria-hidden="true">📦</div>
+        <h4 data-i18n="feat2_title">Gestion du stock</h4>
+        <p data-i18n="feat2_desc">Alerte automatique quand un produit est presque épuisé. Statuts : Disponible, Rupture, Archivé.</p>
+      </div>
+      <div class="feat-card" data-reveal style="--delay:120ms">
+        <div class="feat-icon" aria-hidden="true">📲</div>
+        <h4 data-i18n="feat3_title">QR Code produit</h4>
+        <p data-i18n="feat3_desc">Idéal pour les marchés physiques. Le client scanne et commande directement depuis son téléphone.</p>
+      </div>
+      <div class="feat-card" data-reveal style="--delay:180ms">
+        <div class="feat-icon" aria-hidden="true">📄</div>
+        <h4 data-i18n="feat4_title">Catalogue PDF auto</h4>
+        <p data-i18n="feat4_desc">Génère un PDF professionnel de tous tes produits à partager dans les groupes Facebook.</p>
+      </div>
+      <div class="feat-card" data-reveal style="--delay:240ms">
+        <div class="feat-icon" aria-hidden="true">💬</div>
+        <h4 data-i18n="feat5_title">WhatsApp intégré</h4>
+        <p data-i18n="feat5_desc">Message pré-rempli automatique avec les détails de chaque commande. Confirmation en un clic.</p>
+      </div>
+      <div class="feat-card" data-reveal style="--delay:300ms">
+        <div class="feat-icon" aria-hidden="true">📊</div>
+        <h4 data-i18n="feat6_title">Analytics simples</h4>
+        <p data-i18n="feat6_desc">Vois combien de fois ton lien a été cliqué et d'où viennent tes visiteurs. Facebook, TikTok, WhatsApp.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ TESTIMONIALS ═══════════════ -->
+<section class="section-testimonials" aria-labelledby="test-heading">
+  <div class="container">
+    <h2 id="test-heading" class="section-title" data-i18n="test_title">Ils vendent avec Bazar</h2>
+    <p class="section-sub" data-i18n="test_sub">De vrais vendeurs, de vrais résultats</p>
+    <div class="test-grid">
+      <blockquote class="test-card" data-reveal>
+        <p data-i18n="test1_quote">"Avant Bazar, je notais toutes mes commandes dans la messagerie Facebook. Maintenant tout est centralisé et je rate zéro vente."</p>
+        <footer>
+          <div class="test-avatar" aria-hidden="true">R</div>
+          <cite><strong data-i18n="test1_name">Rachna M.</strong><span data-i18n="test1_role"> — Vendeuse de robes, Antananarivo</span></cite>
+        </footer>
+      </blockquote>
+      <blockquote class="test-card" data-reveal style="--delay:80ms">
+        <p data-i18n="test2_quote">"Les liens produits dans mes TikToks ont multiplié mes commandes par 3. Mes clients commandent directement sans m'envoyer de DM."</p>
+        <footer>
+          <div class="test-avatar" aria-hidden="true">S</div>
+          <cite><strong data-i18n="test2_name">Sammy T.</strong><span data-i18n="test2_role"> — Accessoires &amp; bijoux</span></cite>
+        </footer>
+      </blockquote>
+      <blockquote class="test-card" data-reveal style="--delay:160ms">
+        <p data-i18n="test3_quote">"Le QR code sur mes étiquettes au marché, c'est la meilleure idée. Les clients scannent et commandent même quand je ne suis pas là."</p>
+        <footer>
+          <div class="test-avatar" aria-hidden="true">F</div>
+          <cite><strong data-i18n="test3_name">Fanja H.</strong><span data-i18n="test3_role"> — Épices &amp; produits locaux</span></cite>
+        </footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ PRICING ═══════════════ -->
+<section id="pricing" class="section-pricing" aria-labelledby="pricing-heading">
+  <div class="container">
+    <h2 id="pricing-heading" class="section-title" data-i18n="pricing_title">Des prix adaptés à Madagascar</h2>
+    <p class="section-sub" data-i18n="pricing_sub">Commence gratuitement, monte en gamme quand tu es prêt</p>
+    <div class="plans-grid">
+
+      <article class="plan" data-reveal aria-label="Plan Gratuit">
+        <div class="plan-name" data-i18n="free_name">GRATUIT</div>
+        <div class="plan-price" data-i18n="free_price">0 Ar</div>
+        <div class="plan-period" data-i18n="free_period">/ mois — pour toujours</div>
+        <p class="plan-desc" data-i18n="free_desc">Idéal pour tester et débuter</p>
+        <ul class="plan-features">
+          <li data-i18n="free_li1">Jusqu'à 10 produits</li>
+          <li data-i18n="free_li2">Page vitrine boutique</li>
+          <li data-i18n="free_li3">Formulaire de commande</li>
+          <li data-i18n="free_li4">Liens partageables</li>
+        </ul>
+        <button class="btn btn-plan-ghost" data-i18n="free_cta" onclick="scrollToSignup()">Commencer gratuitement</button>
+      </article>
+
+      <article class="plan plan-featured" data-reveal style="--delay:80ms" aria-label="Plan Starter — recommandé">
+        <div class="plan-popular-badge" data-i18n="popular_badge">Le plus populaire</div>
+        <div class="plan-name" data-i18n="starter_name">STARTER</div>
+        <div class="plan-price" data-i18n="starter_price">5 000 Ar</div>
+        <div class="plan-period" data-i18n="starter_period">/ mois</div>
+        <p class="plan-desc" data-i18n="starter_desc">Pour les vendeurs qui veulent scaler</p>
+        <ul class="plan-features">
+          <li data-i18n="starter_li1">Jusqu'à 50 produits</li>
+          <li data-i18n="starter_li2">QR codes produits</li>
+          <li data-i18n="starter_li3">Notifications WhatsApp</li>
+          <li data-i18n="starter_li4">Analytics basiques</li>
+          <li data-i18n="starter_li5">Export CSV des commandes</li>
+        </ul>
+        <button class="btn btn-plan-featured" data-i18n="starter_cta" onclick="scrollToSignup()">Choisir Starter</button>
+      </article>
+
+      <article class="plan" data-reveal style="--delay:160ms" aria-label="Plan Pro">
+        <div class="plan-name" data-i18n="pro_name">PRO</div>
+        <div class="plan-price" data-i18n="pro_price">15 000 Ar</div>
+        <div class="plan-period" data-i18n="pro_period">/ mois</div>
+        <p class="plan-desc" data-i18n="pro_desc">Pour boutiques à fort volume</p>
+        <ul class="plan-features">
+          <li data-i18n="pro_li1">Produits illimités</li>
+          <li data-i18n="pro_li2">Catalogue PDF automatique</li>
+          <li data-i18n="pro_li3">Variantes taille / couleur</li>
+          <li data-i18n="pro_li4">Panier multi-produit</li>
+          <li data-i18n="pro_li5">Support prioritaire</li>
+        </ul>
+        <button class="btn btn-plan-ghost" data-i18n="pro_cta" onclick="scrollToSignup()">Passer à Pro</button>
+      </article>
+
+    </div>
+    <p class="pricing-note" data-i18n="pricing_note">Aucune carte bancaire requise pour commencer · Paiement à la livraison pour tes clients</p>
+  </div>
+</section>
+
+<!-- ═══════════════ CTA FINAL ═══════════════ -->
+<section id="signup" class="section-cta" aria-labelledby="cta-heading">
+  <div class="container cta-inner">
+    <h2 id="cta-heading" class="cta-title" data-i18n="cta_title">Prêt à vendre mieux ?</h2>
+    <p class="cta-sub" data-i18n="cta_sub">Rejoins les vendeurs qui ont déjà transformé leur page Facebook en vraie boutique professionnelle.</p>
+    <div class="cta-form" role="form" aria-label="Inscription rapide">
+      <input type="email" class="cta-email" placeholder="ton@email.com" aria-label="Adresse email" data-i18n-placeholder="cta_placeholder"/>
+      <button class="btn btn-cta btn-lg" data-i18n="cta_btn" onclick="handleSignup(this)">Créer ma boutique gratuitement →</button>
+    </div>
+    <p class="cta-hint" data-i18n="cta_hint">Boutique prête en 5 minutes · Gratuit pour toujours</p>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="footer" role="contentinfo">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <div class="logo-mark" aria-hidden="true">B</div>
+      <span class="brand-name" style="color:#fff">bazar<small class="brand-dot">.app</small></span>
+    </div>
+    <nav class="footer-links" aria-label="Liens du pied de page">
+      <a href="#">Confidentialité</a>
+      <a href="#">Conditions</a>
+      <a href="#">Contact</a>
+      <a href="#">Blog</a>
+    </nav>
+    <p class="footer-text" data-i18n="footer_text">© 2026 Bazar.app — Conçu pour les vendeurs de Madagascar et d'Afrique.</p>
+  </div>
+</footer>
+
+<script src="script.js" defer></script>
+</body>
+</html>
