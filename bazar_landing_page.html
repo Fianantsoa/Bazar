@@ -1,0 +1,201 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1E2D3D;
+  --gold:#F5A623;
+  --sand:#F5F5F0;
+  --slate:#6B7A8D;
+  --white:#ffffff;
+}
+body{background:var(--white);font-family:'DM Sans',sans-serif;color:var(--navy)}
+.hero{background:var(--navy);padding:48px 32px 56px;text-align:center;position:relative;overflow:hidden}
+.hero-badge{display:inline-block;background:rgba(245,166,35,0.15);border:1px solid rgba(245,166,35,0.4);color:var(--gold);font-size:12px;font-weight:500;padding:5px 14px;border-radius:20px;letter-spacing:1px;margin-bottom:20px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(30px,6vw,48px);font-weight:900;color:var(--white);line-height:1.15;margin-bottom:12px}
+.hero h1 em{color:var(--gold);font-style:normal}
+.hero-sub{font-size:15px;color:#8A9BB0;max-width:480px;margin:0 auto 28px;line-height:1.6}
+.cta-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--gold);color:var(--navy);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;padding:13px 26px;border-radius:8px;border:none;cursor:pointer;letter-spacing:.3px}
+.btn-secondary{background:transparent;color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:13px 26px;border-radius:8px;border:1px solid rgba(255,255,255,0.25);cursor:pointer}
+.hero-stats{display:flex;justify-content:center;gap:32px;margin-top:36px;border-top:1px solid rgba(255,255,255,0.08);padding-top:28px;flex-wrap:wrap}
+.stat-n{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--gold)}
+.stat-l{font-size:12px;color:#8A9BB0;margin-top:2px}
+
+.how{background:var(--sand);padding:48px 24px}
+.section-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);text-align:center;margin-bottom:6px}
+.section-sub{font-size:14px;color:var(--slate);text-align:center;margin-bottom:32px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+.step{background:var(--white);border-radius:12px;border:0.5px solid #E0DFD9;padding:22px 18px}
+.step-n{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:var(--gold);color:var(--navy);font-size:14px;font-weight:700;border-radius:8px;margin-bottom:12px}
+.step h3{font-size:14px;font-weight:500;margin-bottom:6px;color:var(--navy)}
+.step p{font-size:13px;color:var(--slate);line-height:1.5}
+
+.features{padding:48px 24px;background:var(--white)}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:28px}
+.feat{border:0.5px solid #E5E4DE;border-radius:12px;padding:20px 16px}
+.feat-icon{font-size:22px;margin-bottom:10px}
+.feat h4{font-size:13px;font-weight:500;color:var(--navy);margin-bottom:5px}
+.feat p{font-size:12px;color:var(--slate);line-height:1.5}
+
+.plans{background:var(--navy);padding:48px 24px}
+.plans .section-title{color:var(--white)}
+.plans .section-sub{color:#8A9BB0}
+.plan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:28px}
+.plan{background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.12);border-radius:12px;padding:22px 18px}
+.plan.featured{background:var(--gold);border-color:var(--gold)}
+.plan-name{font-size:12px;font-weight:500;letter-spacing:1px;color:#8A9BB0;margin-bottom:8px}
+.plan.featured .plan-name{color:rgba(30,45,61,0.7)}
+.plan-price{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--white);margin-bottom:4px}
+.plan.featured .plan-price,.plan.featured .plan-period,.plan.featured ul li{color:var(--navy)}
+.plan-period{font-size:12px;color:#8A9BB0;margin-bottom:16px}
+.plan ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.plan ul li{font-size:12px;color:rgba(255,255,255,0.65);padding-left:14px;position:relative;line-height:1.4}
+.plan ul li::before{content:"✓";position:absolute;left:0;color:var(--gold);font-weight:700}
+.plan.featured ul li::before{color:var(--navy)}
+
+.cta-final{padding:48px 24px;text-align:center;background:var(--sand)}
+.cta-final h2{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--navy);margin-bottom:10px}
+.cta-final p{font-size:14px;color:var(--slate);margin-bottom:24px}
+.logo-bar{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:32px}
+.logo-mark{width:40px;height:40px;background:var(--gold);border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy)}
+.logo-text{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--navy)}
+.logo-dot{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--slate);letter-spacing:2px}
+</style>
+
+<h2 class="sr-only">Landing page Bazar.app — plateforme de boutiques en ligne pour vendeurs Facebook et TikTok</h2>
+
+<div class="logo-bar" style="background:var(--navy);padding:16px 24px;justify-content:space-between;margin-bottom:0">
+  <div style="display:flex;align-items:center;gap:8px">
+    <div class="logo-mark">B</div>
+    <span style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff">bazar</span>
+    <span style="font-size:11px;color:#8A9BB0;letter-spacing:2px">.app</span>
+  </div>
+  <button class="btn-primary" style="padding:9px 18px;font-size:13px" onclick="sendPrompt('Comment créer mon compte vendeur sur Bazar.app ?')">Commencer gratuitement</button>
+</div>
+
+<div class="hero">
+  <div class="hero-badge">MADAGASCAR & AFRIQUE</div>
+  <h1>Ta boutique en ligne.<br><em>Un lien.</em> C'est tout.</h1>
+  <p class="hero-sub">Crée ta boutique en 5 minutes. Partage tes produits sur Facebook et TikTok. Reçois tes commandes de façon organisée — sans caisse, sans stress.</p>
+  <div class="cta-row">
+    <button class="btn-primary" onclick="sendPrompt('Quelles sont les étapes pour créer ma boutique Bazar.app ?')">Créer ma boutique gratuitement ↗</button>
+    <button class="btn-secondary" onclick="sendPrompt('Montre-moi un exemple de page produit Bazar.app')">Voir un exemple</button>
+  </div>
+  <div class="hero-stats">
+    <div><div class="stat-n">5 min</div><div class="stat-l">Pour ouvrir ta boutique</div></div>
+    <div><div class="stat-n">0 Ar</div><div class="stat-l">Pour commencer</div></div>
+    <div><div class="stat-n">1 lien</div><div class="stat-l">À partager partout</div></div>
+  </div>
+</div>
+
+<div class="how">
+  <p class="section-title">Comment ça marche ?</p>
+  <p class="section-sub">Trois étapes, et tu vends.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">1</div>
+      <h3>Crée ta boutique</h3>
+      <p>Inscris-toi, ajoute ton logo et décris tes produits. Boutique prête en moins de 5 minutes.</p>
+    </div>
+    <div class="step">
+      <div class="step-n">2</div>
+      <h3>Partage ton lien</h3>
+      <p>Chaque produit a un lien court unique. Colle-le dans ta bio Facebook, TikTok ou un groupe WhatsApp.</p>
+    </div>
+    <div class="step">
+      <div class="step-n">3</div>
+      <h3>Gère tes commandes</h3>
+      <p>Les clients commandent via un formulaire simple. Tu vois tout dans ton tableau de bord.</p>
+    </div>
+  </div>
+</div>
+
+<div class="features">
+  <p class="section-title">Tout ce qu'il te faut</p>
+  <p class="section-sub">Des outils pensés pour les vendeurs de réseaux sociaux</p>
+  <div class="feat-grid">
+    <div class="feat">
+      <div class="feat-icon">🔗</div>
+      <h4>Liens partageables</h4>
+      <p>Un lien court par produit, copié en un clic pour Facebook, TikTok ou WhatsApp.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">📦</div>
+      <h4>Gestion du stock</h4>
+      <p>Alerte automatique quand un produit est presque épuisé. Plus de vente à perte.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">📲</div>
+      <h4>QR Code produit</h4>
+      <p>Idéal pour les marchés physiques. Le client scanne et commande directement.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">📄</div>
+      <h4>Catalogue PDF auto</h4>
+      <p>Génère un PDF pro de tous tes produits à partager dans les groupes Facebook.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">💬</div>
+      <h4>WhatsApp intégré</h4>
+      <p>Message pré-rempli automatique pour confirmer chaque commande en un clic.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">📊</div>
+      <h4>Analytics simples</h4>
+      <p>Vois combien de fois ton lien a été cliqué et d'où viennent tes visiteurs.</p>
+    </div>
+  </div>
+</div>
+
+<div class="plans">
+  <p class="section-title">Des prix adaptés à Madagascar</p>
+  <p class="section-sub">Commence gratuitement, monte en gamme quand tu es prêt.</p>
+  <div class="plan-grid">
+    <div class="plan">
+      <div class="plan-name">GRATUIT</div>
+      <div class="plan-price">0 Ar</div>
+      <div class="plan-period">/ mois — pour toujours</div>
+      <ul>
+        <li>Jusqu'à 10 produits</li>
+        <li>Page vitrine boutique</li>
+        <li>Formulaire de commande</li>
+        <li>Liens partageables</li>
+      </ul>
+    </div>
+    <div class="plan featured">
+      <div class="plan-name">STARTER</div>
+      <div class="plan-price">5 000 Ar</div>
+      <div class="plan-period">/ mois</div>
+      <ul>
+        <li>Jusqu'à 50 produits</li>
+        <li>QR codes produits</li>
+        <li>Notifications WhatsApp</li>
+        <li>Analytics basiques</li>
+      </ul>
+    </div>
+    <div class="plan">
+      <div class="plan-name">PRO</div>
+      <div class="plan-price">15 000 Ar</div>
+      <div class="plan-period">/ mois</div>
+      <ul>
+        <li>Produits illimités</li>
+        <li>Catalogue PDF auto</li>
+        <li>Variantes taille/couleur</li>
+        <li>Export CSV + priorité</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="cta-final">
+  <div class="logo-bar" style="margin-bottom:20px">
+    <div class="logo-mark">B</div>
+    <span class="logo-text">bazar</span>
+    <span class="logo-dot">.app</span>
+  </div>
+  <h2>Prêt à vendre mieux ?</h2>
+  <p>Rejoins les vendeurs qui ont déjà transformé leur page Facebook en vraie boutique en ligne.</p>
+  <button class="btn-primary" style="font-size:15px;padding:15px 32px" onclick="sendPrompt('Comment puis-je créer ma boutique Bazar.app maintenant ?')">Créer ma boutique — c'est gratuit ↗</button>
+  <p style="margin-top:16px;font-size:12px;color:var(--slate)">Aucune carte bancaire requise · Boutique prête en 5 minutes</p>
+</div>
