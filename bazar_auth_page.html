@@ -1,0 +1,129 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0;}
+  :root{
+    --navy:#1E2D3D;
+    --gold:#F5A623;
+    --sand:#F5F5F0;
+    --slate:#6B7A8D;
+    --navy-light:#2a3f58;
+  }
+  body{background:var(--sand);}
+  .page{display:flex;min-height:600px;font-family:'DM Sans',sans-serif;}
+  .left{background:var(--navy);flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:2.5rem;position:relative;overflow:hidden;}
+  .left::before{content:'';position:absolute;top:-60px;right:-60px;width:260px;height:260px;border-radius:50%;border:1.5px solid rgba(245,166,35,0.15);}
+  .left::after{content:'';position:absolute;bottom:-40px;left:-40px;width:180px;height:180px;border-radius:50%;border:1.5px solid rgba(245,166,35,0.1);}
+  .logo-row{display:flex;align-items:center;gap:10px;}
+  .logo-icon{width:44px;height:44px;background:var(--gold);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:26px;font-weight:700;color:var(--navy);flex-shrink:0;}
+  .logo-text{font-family:'DM Serif Display',serif;font-size:24px;color:#fff;}
+  .logo-dot{color:var(--gold);}
+  .left-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:1rem 0;}
+  .left-headline{font-family:'DM Serif Display',serif;font-size:28px;color:#fff;line-height:1.25;margin-bottom:1rem;}
+  .left-headline em{color:var(--gold);font-style:normal;}
+  .left-sub{font-size:14px;color:rgba(255,255,255,0.55);line-height:1.6;max-width:260px;}
+  .feature-list{margin-top:1.5rem;display:flex;flex-direction:column;gap:10px;}
+  .feature-item{display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);}
+  .feature-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+  .left-footer{font-size:12px;color:rgba(255,255,255,0.3);position:relative;z-index:1;}
+  .right{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem;}
+  .form-box{width:100%;max-width:340px;}
+  .tab-row{display:flex;border-radius:10px;background:rgba(30,45,61,0.07);padding:4px;margin-bottom:2rem;}
+  .tab{flex:1;text-align:center;padding:8px 0;font-size:13px;font-weight:500;border-radius:7px;cursor:pointer;color:var(--slate);transition:all .18s;}
+  .tab.active{background:#fff;color:var(--navy);box-shadow:0 1px 4px rgba(30,45,61,0.12);}
+  .form-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--navy);margin-bottom:4px;}
+  .form-sub{font-size:13px;color:var(--slate);margin-bottom:1.5rem;}
+  .field{margin-bottom:1rem;}
+  .field label{display:block;font-size:12px;font-weight:500;color:var(--navy);margin-bottom:5px;letter-spacing:0.02em;}
+  .field input{width:100%;height:42px;border:1px solid #D8DDE4;border-radius:8px;padding:0 12px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--navy);background:#fff;outline:none;transition:border-color .15s;}
+  .field input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,166,35,0.12);}
+  .field input::placeholder{color:#B0BAC5;}
+  .field-row{display:flex;gap:8px;}
+  .field-row .field{flex:1;}
+  .forgot{text-align:right;font-size:12px;color:var(--gold);text-decoration:none;margin-top:-6px;display:block;margin-bottom:1rem;cursor:pointer;}
+  .btn-gold{width:100%;height:44px;background:var(--gold);color:var(--navy);border:none;border-radius:8px;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity .15s;}
+  .btn-gold:hover{opacity:0.88;}
+  .divider{display:flex;align-items:center;gap:10px;margin:1.2rem 0;color:#B0BAC5;font-size:12px;}
+  .divider::before,.divider::after{content:'';flex:1;height:1px;background:#E8ECF0;}
+  .btn-google{width:100%;height:42px;background:#fff;border:1px solid #D8DDE4;border-radius:8px;font-size:13px;font-weight:500;color:var(--navy);font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:border-color .15s;}
+  .btn-google:hover{border-color:var(--navy);}
+  .google-icon{width:16px;height:16px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--navy);}
+  .switch-line{text-align:center;font-size:12px;color:var(--slate);margin-top:1.2rem;}
+  .switch-link{color:var(--gold);cursor:pointer;font-weight:500;}
+  .terms{font-size:11px;color:#B0BAC5;text-align:center;margin-top:1rem;line-height:1.5;}
+  .terms a{color:var(--slate);}
+</style>
+
+<div class="page">
+  <div class="left">
+    <div class="logo-row">
+      <div class="logo-icon">B</div>
+      <span class="logo-text">bazar<span class="logo-dot">.app</span></span>
+    </div>
+    <div class="left-body">
+      <div class="left-headline">Ta boutique en ligne,<br><em>en 5 minutes.</em></div>
+      <div class="left-sub">Crée ton shop, partage tes produits sur Facebook & TikTok, reçois tes commandes.</div>
+      <div class="feature-list">
+        <div class="feature-item"><div class="feature-dot"></div>Liens produit partageables en 1 clic</div>
+        <div class="feature-item"><div class="feature-dot"></div>Gestion des commandes simplifiée</div>
+        <div class="feature-item"><div class="feature-dot"></div>QR code & catalogue PDF automatique</div>
+        <div class="feature-item"><div class="feature-dot"></div>Notifications WhatsApp client</div>
+      </div>
+    </div>
+    <div class="left-footer">© 2025 Bazar.app · Made in Madagascar</div>
+  </div>
+
+  <div class="right">
+    <div class="form-box">
+      <div class="tab-row">
+        <div class="tab active" id="tab-login" onclick="switchTab('login')">Connexion</div>
+        <div class="tab" id="tab-signup" onclick="switchTab('signup')">Inscription</div>
+      </div>
+
+      <div id="panel-login">
+        <div class="form-title">Bon retour 👋</div>
+        <div class="form-sub">Connecte-toi à ta boutique</div>
+        <div class="field"><label>Adresse email</label><input type="email" placeholder="toi@exemple.com" /></div>
+        <div class="field"><label>Mot de passe</label><input type="password" placeholder="••••••••" /></div>
+        <a class="forgot">Mot de passe oublié ?</a>
+        <button class="btn-gold">Se connecter</button>
+        <div class="divider">ou</div>
+        <button class="btn-google">
+          <div class="google-icon">G</div>
+          Continuer avec Google
+        </button>
+        <div class="switch-line">Pas encore de compte ? <span class="switch-link" onclick="switchTab('signup')">Créer ma boutique</span></div>
+      </div>
+
+      <div id="panel-signup" style="display:none">
+        <div class="form-title">Crée ta boutique</div>
+        <div class="form-sub">Gratuit · Aucune carte requise</div>
+        <div class="field-row">
+          <div class="field"><label>Prénom</label><input type="text" placeholder="Miora" /></div>
+          <div class="field"><label>Nom</label><input type="text" placeholder="Rakoto" /></div>
+        </div>
+        <div class="field"><label>Nom de ta boutique</label><input type="text" placeholder="ex: Mode Miora" /></div>
+        <div class="field"><label>Email</label><input type="email" placeholder="toi@exemple.com" /></div>
+        <div class="field"><label>Mot de passe</label><input type="password" placeholder="8 caractères minimum" /></div>
+        <button class="btn-gold">Créer ma boutique gratuitement</button>
+        <div class="divider">ou</div>
+        <button class="btn-google">
+          <div class="google-icon">G</div>
+          S'inscrire avec Google
+        </button>
+        <div class="switch-line">Déjà un compte ? <span class="switch-link" onclick="switchTab('login')">Se connecter</span></div>
+        <div class="terms">En créant un compte, tu acceptes nos <a href="#">conditions d'utilisation</a> et notre <a href="#">politique de confidentialité</a>.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(t) {
+  document.getElementById('tab-login').classList.toggle('active', t==='login');
+  document.getElementById('tab-signup').classList.toggle('active', t==='signup');
+  document.getElementById('panel-login').style.display = t==='login' ? 'block' : 'none';
+  document.getElementById('panel-signup').style.display = t==='signup' ? 'block' : 'none';
+}
+</script>

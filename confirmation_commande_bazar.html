@@ -1,0 +1,509 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .screen {
+    font-family: 'DM Sans', sans-serif;
+    background: #F5F5F0;
+    min-height: 100vh;
+    padding: 0;
+    max-width: 420px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .top-bar {
+    background: #1E2D3D;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo-text {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 22px;
+    color: #fff;
+    letter-spacing: -0.5px;
+  }
+  .logo-dot { color: #F5A623; }
+
+  .status-pill {
+    background: rgba(245,166,35,0.15);
+    color: #F5A623;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(245,166,35,0.3);
+  }
+
+  .hero {
+    background: #1E2D3D;
+    padding: 32px 24px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0; right: 0;
+    height: 28px;
+    background: #F5F5F0;
+    border-radius: 28px 28px 0 0;
+  }
+
+  .check-ring {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(245,166,35,0.12);
+    border: 2px solid #F5A623;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    animation: pop 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+
+  @keyframes pop {
+    from { transform: scale(0.4); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .check-ring svg { animation: draw 0.5s 0.3s ease both; stroke-dasharray: 40; stroke-dashoffset: 40; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+
+  .hero-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 26px;
+    color: #fff;
+    margin-bottom: 6px;
+    animation: fadeUp 0.4s 0.2s ease both;
+    opacity: 0;
+  }
+
+  .hero-sub {
+    font-size: 13px;
+    color: #8A9BB0;
+    animation: fadeUp 0.4s 0.35s ease both;
+    opacity: 0;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .order-num {
+    display: inline-block;
+    margin-top: 14px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 6px 16px;
+    font-size: 12px;
+    color: #8A9BB0;
+    animation: fadeUp 0.4s 0.45s ease both;
+    opacity: 0;
+  }
+  .order-num span { color: #F5A623; font-weight: 500; letter-spacing: 1px; }
+
+  .body { padding: 20px 16px 24px; }
+
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 12px;
+    border: 0.5px solid rgba(0,0,0,0.07);
+    animation: fadeUp 0.4s ease both;
+  }
+  .card:nth-child(1) { animation-delay: 0.5s; opacity: 0; }
+  .card:nth-child(2) { animation-delay: 0.6s; opacity: 0; }
+  .card:nth-child(3) { animation-delay: 0.7s; opacity: 0; }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .card-icon {
+    width: 30px;
+    height: 30px;
+    background: #FDF3E0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #F5A623;
+    font-size: 16px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1E2D3D;
+  }
+
+  .product-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .product-img {
+    width: 62px;
+    height: 62px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #E8E0D5 0%, #D4C9B8 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+  }
+  .product-info { flex: 1; }
+  .product-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1E2D3D;
+    margin-bottom: 3px;
+  }
+  .product-variant {
+    font-size: 12px;
+    color: #6B7A8D;
+    margin-bottom: 6px;
+  }
+  .product-qty-price {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .qty-badge {
+    background: #F5F5F0;
+    border-radius: 6px;
+    padding: 3px 9px;
+    font-size: 12px;
+    color: #6B7A8D;
+  }
+  .price {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1E2D3D;
+  }
+  .price-cur { font-size: 11px; color: #6B7A8D; font-weight: 400; }
+
+  .divider { height: 0.5px; background: #F0EEE8; margin: 12px 0; }
+
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .total-label { font-size: 13px; color: #6B7A8D; }
+  .total-val { font-size: 17px; font-weight: 500; color: #1E2D3D; }
+  .total-val .cur { font-size: 12px; color: #6B7A8D; font-weight: 400; }
+
+  .info-list { display: flex; flex-direction: column; gap: 10px; }
+  .info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .info-ico {
+    width: 28px;
+    height: 28px;
+    background: #F5F5F0;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #6B7A8D;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .info-content {}
+  .info-lbl { font-size: 11px; color: #8A9BB0; margin-bottom: 1px; }
+  .info-val { font-size: 13px; color: #1E2D3D; font-weight: 400; }
+
+  .seller-card {
+    background: #1E2D3D;
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 12px;
+    animation: fadeUp 0.4s 0.75s ease both;
+    opacity: 0;
+  }
+  .seller-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .seller-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: #F5A623;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: #1E2D3D;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .seller-info { flex: 1; }
+  .seller-name { font-size: 14px; font-weight: 500; color: #fff; margin-bottom: 2px; }
+  .seller-sub { font-size: 12px; color: #6B7A8D; }
+
+  .actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .btn-wa {
+    flex: 1;
+    background: #25D366;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    transition: opacity 0.15s;
+  }
+  .btn-wa:hover { opacity: 0.88; }
+
+  .btn-call {
+    width: 46px;
+    height: 46px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #8A9BB0;
+    transition: background 0.15s;
+    flex-shrink: 0;
+  }
+  .btn-call:hover { background: rgba(255,255,255,0.14); }
+
+  .browse-btn {
+    display: block;
+    width: 100%;
+    background: #1E2D3D;
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 15px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    text-align: center;
+    animation: fadeUp 0.4s 0.85s ease both;
+    opacity: 0;
+    transition: background 0.15s;
+    margin-bottom: 10px;
+  }
+  .browse-btn:hover { background: #2a3f56; }
+
+  .share-btn {
+    display: block;
+    width: 100%;
+    background: transparent;
+    color: #6B7A8D;
+    border: 1px solid #E0DDD7;
+    border-radius: 14px;
+    padding: 13px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    text-align: center;
+    animation: fadeUp 0.4s 0.9s ease both;
+    opacity: 0;
+    transition: border-color 0.15s;
+  }
+  .share-btn:hover { border-color: #c0bdb7; }
+
+  .status-track {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 4px;
+  }
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+  }
+  .step-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #E0DDD7;
+    margin-bottom: 6px;
+  }
+  .step-dot.active { background: #F5A623; }
+  .step-dot.done { background: #1E2D3D; }
+  .step-label { font-size: 10px; color: #8A9BB0; text-align: center; line-height: 1.3; }
+  .step-label.active { color: #F5A623; font-weight: 500; }
+  .step-label.done { color: #1E2D3D; }
+  .step-line {
+    flex: 1;
+    height: 1.5px;
+    background: #E0DDD7;
+    margin-bottom: 18px;
+    align-self: flex-start;
+    margin-top: 5px;
+  }
+  .step-line.done { background: #1E2D3D; }
+</style>
+
+<h2 class="sr-only">Mockup page confirmation de commande — bazar.app</h2>
+
+<div class="screen">
+
+  <div class="top-bar">
+    <div class="logo-text">bazar<span class="logo-dot">.</span>app</div>
+    <div class="status-pill">Nouvelle commande</div>
+  </div>
+
+  <div class="hero">
+    <div class="check-ring">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+        <polyline points="7,17 13,23 25,10" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="hero-title">Commande reçue !</div>
+    <div class="hero-sub">Le vendeur va vous confirmer bientôt</div>
+    <div class="order-num">Commande <span>#BZ-4821</span></div>
+  </div>
+
+  <div class="body">
+
+    <!-- Produit commandé -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon"><i class="ti ti-package" aria-hidden="true"></i></div>
+        <div class="card-title">Votre commande</div>
+      </div>
+      <div class="product-row">
+        <div class="product-img">👗</div>
+        <div class="product-info">
+          <div class="product-name">Robe Fleurie d'Été</div>
+          <div class="product-variant">Taille M · Coloris Bleu</div>
+          <div class="product-qty-price">
+            <div class="qty-badge">Qté : 1</div>
+            <div class="price">45 000 <span class="price-cur">Ar</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="total-row">
+        <div class="total-label">Total à payer</div>
+        <div class="total-val">45 000 <span class="cur">Ar</span></div>
+      </div>
+    </div>
+
+    <!-- Infos livraison -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon"><i class="ti ti-map-pin" aria-hidden="true"></i></div>
+        <div class="card-title">Détails de livraison</div>
+      </div>
+      <div class="info-list">
+        <div class="info-item">
+          <div class="info-ico"><i class="ti ti-user" aria-hidden="true"></i></div>
+          <div class="info-content">
+            <div class="info-lbl">Client</div>
+            <div class="info-val">Miora Rasoamanarivo</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-ico"><i class="ti ti-phone" aria-hidden="true"></i></div>
+          <div class="info-content">
+            <div class="info-lbl">Téléphone</div>
+            <div class="info-val">+261 34 12 345 67</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-ico"><i class="ti ti-home" aria-hidden="true"></i></div>
+          <div class="info-content">
+            <div class="info-lbl">Adresse</div>
+            <div class="info-val">Lot II C 34, Antananarivo 101</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Suivi statut -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon"><i class="ti ti-truck" aria-hidden="true"></i></div>
+        <div class="card-title">Suivi de commande</div>
+      </div>
+      <div class="status-track">
+        <div class="step">
+          <div class="step-dot done"></div>
+          <div class="step-label done">Reçue</div>
+        </div>
+        <div class="step-line done"></div>
+        <div class="step">
+          <div class="step-dot active"></div>
+          <div class="step-label active">En attente confirmation</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step">
+          <div class="step-dot"></div>
+          <div class="step-label">En livraison</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step">
+          <div class="step-dot"></div>
+          <div class="step-label">Livrée</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact vendeur -->
+    <div class="seller-card">
+      <div class="seller-row">
+        <div class="seller-avatar">F</div>
+        <div class="seller-info">
+          <div class="seller-name">Fashion Tana</div>
+          <div class="seller-sub">Vendeur vérifié · Répond vite</div>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn-wa">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Contacter le vendeur
+        </button>
+        <button class="btn-call"><i class="ti ti-phone" aria-hidden="true"></i></button>
+      </div>
+    </div>
+
+    <button class="browse-btn">Voir d'autres produits de la boutique</button>
+    <button class="share-btn">Partager cette boutique ↗</button>
+
+  </div>
+</div>
