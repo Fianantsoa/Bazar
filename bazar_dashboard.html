@@ -1,0 +1,510 @@
+
+<h2 class="sr-only">Tableau de bord Bazar.app — gestion boutique, commandes, produits et statistiques</h2>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1E2D3D;--gold:#F5A623;--sand:#F5F5F0;--slate:#6B7A8D}
+body{font-family:'Georgia',serif}
+.db{display:flex;height:100vh;min-height:600px;background:var(--sand);font-family:'Arial',sans-serif}
+.sidebar{width:220px;background:var(--navy);display:flex;flex-direction:column;padding:0;flex-shrink:0}
+.logo{padding:20px 20px 16px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.logo-inner{display:flex;align-items:center;gap:10px}
+.logo-box{width:34px;height:34px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Georgia',serif;font-size:18px;font-weight:700;color:var(--navy)}
+.logo-text{font-family:'Georgia',serif;font-size:20px;font-weight:700;color:#fff}
+.logo-ext{font-size:11px;color:#8A9BB0;letter-spacing:2px}
+.nav{padding:12px 0;flex:1}
+.nav-section{font-size:10px;color:#8A9BB0;letter-spacing:2px;padding:12px 20px 6px;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;color:#B0BEC5;font-size:13px;border-left:3px solid transparent;transition:all 0.15s}
+.nav-item:hover{background:rgba(255,255,255,0.06);color:#fff}
+.nav-item.active{background:rgba(245,166,35,0.12);color:var(--gold);border-left-color:var(--gold)}
+.nav-item i{font-size:16px;width:18px}
+.badge{margin-left:auto;background:var(--gold);color:var(--navy);font-size:10px;font-weight:700;border-radius:10px;padding:2px 7px}
+.sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,0.08)}
+.seller-mini{display:flex;align-items:center;gap:9px}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--gold);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0}
+.seller-name{font-size:12px;color:#fff;font-weight:500}
+.seller-plan{font-size:10px;color:#8A9BB0}
+.main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.topbar{background:#fff;border-bottom:1px solid var(--color-border-tertiary);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.topbar-title{font-size:16px;font-weight:500;color:var(--navy)}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.btn-gold{background:var(--gold);color:var(--navy);border:none;border-radius:8px;padding:7px 14px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px}
+.btn-ghost{background:transparent;border:1px solid var(--color-border-secondary);border-radius:8px;padding:7px 12px;font-size:13px;cursor:pointer;color:var(--color-text-secondary);display:flex;align-items:center;gap:6px}
+.notif-dot{position:relative}
+.notif-dot::after{content:'3';position:absolute;top:-4px;right:-4px;background:#E24B4A;color:#fff;font-size:9px;width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
+.content{padding:20px 24px;flex:1}
+.page{display:none}
+.page.active{display:block}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.stat-card{background:#fff;border-radius:12px;padding:16px;border:0.5px solid var(--color-border-tertiary)}
+.stat-label{font-size:12px;color:var(--slate);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.stat-value{font-size:24px;font-weight:700;color:var(--navy)}
+.stat-sub{font-size:11px;color:var(--slate);margin-top:3px}
+.stat-up{color:#1D9E75}
+.stat-down{color:#E24B4A}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.card{background:#fff;border-radius:12px;padding:18px;border:0.5px solid var(--color-border-tertiary)}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.card-title{font-size:14px;font-weight:600;color:var(--navy)}
+.chart-bars{display:flex;align-items:flex-end;gap:4px;height:90px}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bar{width:100%;background:rgba(245,166,35,0.25);border-radius:3px 3px 0 0;transition:all 0.3s}
+.bar.active{background:var(--gold)}
+.bar-lbl{font-size:9px;color:var(--slate)}
+.orders-list{display:flex;flex-direction:column;gap:8px}
+.order-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;border:0.5px solid var(--color-border-tertiary);cursor:pointer;transition:background 0.15s}
+.order-row:hover{background:var(--sand)}
+.order-avatar{width:32px;height:32px;border-radius:8px;background:#E6F1FB;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#185FA5;flex-shrink:0}
+.order-info{flex:1;min-width:0}
+.order-name{font-size:13px;font-weight:500;color:var(--navy)}
+.order-prod{font-size:11px;color:var(--slate);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.order-right{text-align:right;flex-shrink:0}
+.order-price{font-size:13px;font-weight:600;color:var(--navy)}
+.status-badge{font-size:10px;padding:3px 8px;border-radius:20px;display:inline-block;margin-top:2px}
+.s-new{background:#EAF3DE;color:#3B6D11}
+.s-conf{background:#E6F1FB;color:#185FA5}
+.s-live{background:#FAEEDA;color:#854F0B}
+.s-done{background:#E1F5EE;color:#0F6E56}
+.s-cancel{background:#FCEBEB;color:#A32D2D}
+.alerts{display:flex;flex-direction:column;gap:6px}
+.alert-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;background:rgba(226,75,74,0.06);border:0.5px solid rgba(226,75,74,0.2)}
+.alert-icon{color:#E24B4A;font-size:16px}
+.alert-text{font-size:12px;color:var(--navy)}
+.alert-sub{font-size:11px;color:var(--slate)}
+.full-table{background:#fff;border-radius:12px;border:0.5px solid var(--color-border-tertiary);overflow:hidden}
+.table-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.filter-row{display:flex;gap:8px}
+.filter-btn{padding:5px 12px;border-radius:20px;border:0.5px solid var(--color-border-secondary);font-size:12px;cursor:pointer;background:transparent;color:var(--color-text-secondary)}
+.filter-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+table{width:100%;border-collapse:collapse}
+th{font-size:11px;color:var(--slate);font-weight:500;text-align:left;padding:10px 18px;border-bottom:0.5px solid var(--color-border-tertiary);background:var(--sand)}
+td{font-size:13px;padding:11px 18px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--navy)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(245,245,240,0.5)}
+.action-btns{display:flex;gap:6px}
+.action-btn{width:28px;height:28px;border-radius:6px;border:0.5px solid var(--color-border-secondary);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--slate);font-size:14px}
+.action-btn:hover{background:var(--sand);color:var(--navy)}
+.action-btn.wa{border-color:#25D366;color:#25D366}
+.prod-img{width:36px;height:36px;border-radius:8px;object-fit:cover;background:linear-gradient(135deg,var(--gold),#f5c35a);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.prod-row{display:flex;align-items:center;gap:10px}
+.stock-bar-wrap{width:80px;height:6px;background:var(--sand);border-radius:3px;overflow:hidden}
+.stock-bar{height:100%;border-radius:3px}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(30,45,61,0.45);z-index:100;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:#fff;border-radius:16px;width:440px;max-width:95%;padding:24px;max-height:90vh;overflow-y:auto}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.modal-title{font-size:16px;font-weight:600;color:var(--navy)}
+.close-btn{background:none;border:none;font-size:20px;cursor:pointer;color:var(--slate)}
+.form-group{margin-bottom:14px}
+.form-label{font-size:12px;color:var(--slate);margin-bottom:5px;display:block}
+input,select,textarea{width:100%;padding:9px 12px;border:0.5px solid var(--color-border-secondary);border-radius:8px;font-size:13px;font-family:inherit;color:var(--navy)}
+.status-select{appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236B7A8D'/%3E%3C/svg%3E") right 10px center no-repeat}
+.modal-actions{display:flex;gap:10px;margin-top:18px}
+.btn-primary{background:var(--gold);color:var(--navy);border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;flex:1}
+.btn-secondary{background:transparent;color:var(--slate);border:1px solid var(--color-border-secondary);border-radius:8px;padding:10px 18px;font-size:13px;cursor:pointer}
+.tag{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:11px}
+.tag-avail{background:#EAF3DE;color:#3B6D11}
+.tag-rupture{background:#FCEBEB;color:#A32D2D}
+.tag-archive{background:var(--sand);color:var(--slate)}
+.search-input{padding:7px 12px 7px 32px;border:0.5px solid var(--color-border-secondary);border-radius:8px;font-size:13px;width:200px;position:relative}
+.search-wrap{position:relative;display:inline-block}
+.search-wrap i{position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--slate);pointer-events:none}
+.qr-mini{width:48px;height:48px;background:var(--navy);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px}
+.link-copy{display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--sand);border-radius:8px;font-size:11px;color:var(--slate);font-family:monospace}
+.copy-btn{background:var(--gold);color:var(--navy);border:none;border-radius:6px;padding:4px 8px;font-size:10px;font-weight:700;cursor:pointer}
+.analytics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.funnel-bar{height:18px;border-radius:4px;margin-bottom:6px;transition:width 0.4s}
+.notif-list{display:flex;flex-direction:column;gap:8px}
+.notif-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:8px;border:0.5px solid var(--color-border-tertiary);background:#fff}
+.notif-dot-icon{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.n-new{background:var(--gold)}
+.n-stock{background:#E24B4A}
+.n-conf{background:#1D9E75}
+</style>
+
+<div class="db">
+  <div class="sidebar">
+    <div class="logo">
+      <div class="logo-inner">
+        <div class="logo-box">B</div>
+        <div>
+          <div class="logo-text">bazar</div>
+          <div class="logo-ext">.app</div>
+        </div>
+      </div>
+    </div>
+    <nav class="nav">
+      <div class="nav-section">Principal</div>
+      <div class="nav-item active" onclick="showPage('overview')"><i class="ti ti-layout-dashboard" aria-hidden="true"></i>Tableau de bord</div>
+      <div class="nav-item" onclick="showPage('orders')"><i class="ti ti-shopping-bag" aria-hidden="true"></i>Commandes<span class="badge">5</span></div>
+      <div class="nav-item" onclick="showPage('products')"><i class="ti ti-package" aria-hidden="true"></i>Produits</div>
+      <div class="nav-section">Boutique</div>
+      <div class="nav-item" onclick="showPage('analytics')"><i class="ti ti-chart-bar" aria-hidden="true"></i>Statistiques</div>
+      <div class="nav-item" onclick="showPage('notifications')"><i class="ti ti-bell" aria-hidden="true"></i>Notifications<span class="badge">3</span></div>
+      <div class="nav-item" onclick="showPage('settings')"><i class="ti ti-settings" aria-hidden="true"></i>Paramètres</div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="seller-mini">
+        <div class="avatar">RF</div>
+        <div>
+          <div class="seller-name">Rova Fashions</div>
+          <div class="seller-plan">Plan Pro ✦</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="page-title">Tableau de bord</div>
+      <div class="topbar-right">
+        <div class="search-wrap">
+          <i class="ti ti-search" aria-hidden="true"></i>
+          <input class="search-input" type="text" placeholder="Rechercher...">
+        </div>
+        <button class="btn-ghost notif-dot" onclick="showPage('notifications')"><i class="ti ti-bell" aria-hidden="true"></i></button>
+        <button class="btn-gold" onclick="openAddProduct()"><i class="ti ti-plus" aria-hidden="true"></i>Ajouter produit</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- OVERVIEW -->
+      <div class="page active" id="page-overview">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label"><i class="ti ti-shopping-bag" style="color:var(--gold)" aria-hidden="true"></i>Commandes aujourd'hui</div>
+            <div class="stat-value">12</div>
+            <div class="stat-sub stat-up"><i class="ti ti-trending-up" aria-hidden="true"></i> +4 vs hier</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label"><i class="ti ti-cash" style="color:var(--gold)" aria-hidden="true"></i>CA estimé ce mois</div>
+            <div class="stat-value">847 000</div>
+            <div class="stat-sub">Ar / <span class="stat-up">+12%</span></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label"><i class="ti ti-package" style="color:var(--gold)" aria-hidden="true"></i>Produits actifs</div>
+            <div class="stat-value">38</div>
+            <div class="stat-sub stat-down"><i class="ti ti-alert-triangle" aria-hidden="true"></i>3 en rupture</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label"><i class="ti ti-eye" style="color:var(--gold)" aria-hidden="true"></i>Vues liens (7j)</div>
+            <div class="stat-value">1 243</div>
+            <div class="stat-sub stat-up">Taux conv. 18%</div>
+          </div>
+        </div>
+
+        <div class="row2">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Commandes — 7 derniers jours</div>
+              <span style="font-size:11px;color:var(--slate)">Total : 64</span>
+            </div>
+            <div class="chart-bars" id="chart">
+              <div class="bar-wrap"><div class="bar" style="height:45%"></div><div class="bar-lbl">L</div></div>
+              <div class="bar-wrap"><div class="bar" style="height:72%"></div><div class="bar-lbl">M</div></div>
+              <div class="bar-wrap"><div class="bar active" style="height:58%"></div><div class="bar-lbl">Me</div></div>
+              <div class="bar-wrap"><div class="bar active" style="height:88%"></div><div class="bar-lbl">J</div></div>
+              <div class="bar-wrap"><div class="bar active" style="height:65%"></div><div class="bar-lbl">V</div></div>
+              <div class="bar-wrap"><div class="bar active" style="height:92%"></div><div class="bar-lbl">S</div></div>
+              <div class="bar-wrap"><div class="bar active" style="height:100%"></div><div class="bar-lbl">D</div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">Alertes stock</div></div>
+            <div class="alerts">
+              <div class="alert-item"><i class="ti ti-alert-circle alert-icon" aria-hidden="true"></i><div><div class="alert-text">Robe Fleurie Taille M</div><div class="alert-sub">Stock : 1 restant</div></div></div>
+              <div class="alert-item"><i class="ti ti-alert-circle alert-icon" aria-hidden="true"></i><div><div class="alert-text">Sac Cuir Caramel</div><div class="alert-sub">Stock : 0 — Rupture</div></div></div>
+              <div class="alert-item"><i class="ti ti-alert-circle alert-icon" aria-hidden="true"></i><div><div class="alert-text">Chaussures Escarpin 38</div><div class="alert-sub">Stock : 2 restants</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Dernières commandes</div>
+            <button class="btn-ghost" onclick="showPage('orders')" style="font-size:12px">Voir tout</button>
+          </div>
+          <div class="orders-list" id="orders-mini"></div>
+        </div>
+      </div>
+
+      <!-- ORDERS -->
+      <div class="page" id="page-orders">
+        <div class="full-table">
+          <div class="table-head">
+            <div class="filter-row">
+              <button class="filter-btn active" onclick="filterOrders('all',this)">Toutes</button>
+              <button class="filter-btn" onclick="filterOrders('Nouvelle',this)">Nouvelles</button>
+              <button class="filter-btn" onclick="filterOrders('Confirmée',this)">Confirmées</button>
+              <button class="filter-btn" onclick="filterOrders('En livraison',this)">En livraison</button>
+              <button class="filter-btn" onclick="filterOrders('Livrée',this)">Livrées</button>
+            </div>
+            <div style="display:flex;gap:8px">
+              <button class="btn-ghost" style="font-size:12px"><i class="ti ti-download" aria-hidden="true"></i>Export CSV</button>
+            </div>
+          </div>
+          <table>
+            <thead><tr>
+              <th>Client</th><th>Produit</th><th>Téléphone</th><th>Montant</th><th>Statut</th><th>Date</th><th>Actions</th>
+            </tr></thead>
+            <tbody id="orders-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PRODUCTS -->
+      <div class="page" id="page-products">
+        <div class="full-table">
+          <div class="table-head">
+            <div style="display:flex;align-items:center;gap:10px">
+              <div class="search-wrap"><i class="ti ti-search" aria-hidden="true"></i><input class="search-input" type="text" placeholder="Rechercher un produit..." oninput="filterProducts(this.value)"></div>
+              <div class="filter-row">
+                <button class="filter-btn active" onclick="filterProds('all',this)">Tous</button>
+                <button class="filter-btn" onclick="filterProds('Disponible',this)">Disponibles</button>
+                <button class="filter-btn" onclick="filterProds('Rupture',this)">Rupture</button>
+              </div>
+            </div>
+            <button class="btn-gold" onclick="openAddProduct()"><i class="ti ti-plus" aria-hidden="true"></i>Nouveau produit</button>
+          </div>
+          <table>
+            <thead><tr>
+              <th>Produit</th><th>Catégorie</th><th>Prix</th><th>Stock</th><th>Statut</th><th>Lien</th><th>Actions</th>
+            </tr></thead>
+            <tbody id="products-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ANALYTICS -->
+      <div class="page" id="page-analytics">
+        <div class="analytics-grid">
+          <div class="stat-card"><div class="stat-label"><i class="ti ti-eye" style="color:var(--gold)" aria-hidden="true"></i>Vues totales</div><div class="stat-value">4 821</div><div class="stat-sub stat-up">+23% ce mois</div></div>
+          <div class="stat-card"><div class="stat-label"><i class="ti ti-shopping-cart" style="color:var(--gold)" aria-hidden="true"></i>Commandes</div><div class="stat-value">284</div><div class="stat-sub">Ce mois</div></div>
+          <div class="stat-card"><div class="stat-label"><i class="ti ti-chart-pie" style="color:var(--gold)" aria-hidden="true"></i>Taux conversion</div><div class="stat-value">18%</div><div class="stat-sub stat-up">+3pts vs mois dernier</div></div>
+        </div>
+        <div class="row2">
+          <div class="card">
+            <div class="card-header"><div class="card-title">Sources de trafic</div></div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>Facebook</span><span style="color:var(--slate)">52% — 2 507 clics</span></div><div class="stock-bar-wrap" style="width:100%"><div class="stock-bar" style="width:52%;background:#1877F2"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>WhatsApp</span><span style="color:var(--slate)">31% — 1 495 clics</span></div><div class="stock-bar-wrap" style="width:100%"><div class="stock-bar" style="width:31%;background:#25D366"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>TikTok</span><span style="color:var(--slate)">12% — 579 clics</span></div><div class="stock-bar-wrap" style="width:100%"><div class="stock-bar" style="width:12%;background:#010101"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>Direct</span><span style="color:var(--slate)">5% — 241 clics</span></div><div class="stock-bar-wrap" style="width:100%"><div class="stock-bar" style="width:5%;background:var(--gold)"></div></div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">Top produits cliqués</div></div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px"><span>Robe Fleurie</span><span style="font-weight:600;color:var(--navy)">389 vues</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px"><span>Sac Cuir Caramel</span><span style="font-weight:600;color:var(--navy)">241 vues</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px"><span>Escarpin Noir 38</span><span style="font-weight:600;color:var(--navy)">198 vues</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px"><span>Collier Doré</span><span style="font-weight:600;color:var(--navy)">156 vues</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px"><span>Ensemble Wax L</span><span style="font-weight:600;color:var(--navy)">134 vues</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NOTIFICATIONS -->
+      <div class="page" id="page-notifications">
+        <div class="card" style="max-width:640px">
+          <div class="card-header"><div class="card-title">Notifications récentes</div></div>
+          <div class="notif-list">
+            <div class="notif-item"><div class="notif-dot-icon n-new"></div><div><div style="font-size:13px;font-weight:500;color:var(--navy)">Nouvelle commande — Robe Fleurie × 2</div><div style="font-size:11px;color:var(--slate)">Lalaina Rakoto — il y a 5 min</div></div></div>
+            <div class="notif-item"><div class="notif-dot-icon n-stock"></div><div><div style="font-size:13px;font-weight:500;color:var(--navy)">Alerte stock — Sac Cuir Caramel</div><div style="font-size:11px;color:var(--slate)">Stock à 0 — rupture détectée — il y a 1h</div></div></div>
+            <div class="notif-item"><div class="notif-dot-icon n-new"></div><div><div style="font-size:13px;font-weight:500;color:var(--navy)">Nouvelle commande — Escarpin 38</div><div style="font-size:11px;color:var(--slate)">Haingotiana R. — il y a 2h</div></div></div>
+            <div class="notif-item"><div class="notif-dot-icon n-conf"></div><div><div style="font-size:13px;font-weight:500;color:var(--navy)">Commande livrée confirmée</div><div style="font-size:11px;color:var(--slate)">Sandrine R. — Ensemble Wax L — il y a 3h</div></div></div>
+            <div class="notif-item"><div class="notif-dot-icon n-stock"></div><div><div style="font-size:13px;font-weight:500;color:var(--navy)">Alerte stock — Robe Fleurie Taille M</div><div style="font-size:11px;color:var(--slate)">Stock à 1 — seuil minimum atteint — il y a 5h</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="page" id="page-settings">
+        <div class="card" style="max-width:560px">
+          <div class="card-header"><div class="card-title">Ma boutique</div></div>
+          <div class="form-group"><label class="form-label">Nom de la boutique</label><input type="text" value="Rova Fashions"></div>
+          <div class="form-group"><label class="form-label">URL boutique</label><div class="link-copy"><span>bazar.app/boutique/rova-fashions</span><button class="copy-btn" onclick="this.textContent='Copié!'">Copier</button></div></div>
+          <div class="form-group"><label class="form-label">Numéro WhatsApp</label><input type="text" value="+261 34 00 000 00"></div>
+          <div class="form-group"><label class="form-label">Description</label><textarea rows="3">Boutique mode féminine à Antananarivo. Livraison partout à Madagascar.</textarea></div>
+          <div style="margin-top:6px"><button class="btn-primary" style="max-width:180px">Enregistrer</button></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal commande -->
+<div class="modal-bg" id="order-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Détail commande</div>
+      <button class="close-btn" onclick="closeModal('order-modal')">×</button>
+    </div>
+    <div id="order-detail-content"></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal('order-modal')">Fermer</button>
+      <button class="btn-primary" id="wa-btn" onclick="">WhatsApp client</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal produit -->
+<div class="modal-bg" id="product-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="product-modal-title">Nouveau produit</div>
+      <button class="close-btn" onclick="closeModal('product-modal')">×</button>
+    </div>
+    <div class="form-group"><label class="form-label">Nom du produit</label><input type="text" id="prod-name" placeholder="Ex : Robe Fleurie Taille M"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="form-group"><label class="form-label">Prix (Ar)</label><input type="number" id="prod-price" placeholder="25000"></div>
+      <div class="form-group"><label class="form-label">Stock</label><input type="number" id="prod-stock" placeholder="10"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Catégorie</label><select id="prod-cat"><option>Robes</option><option>Sacs</option><option>Chaussures</option><option>Bijoux</option><option>Ensembles</option></select></div>
+    <div class="form-group"><label class="form-label">Description</label><textarea rows="2" id="prod-desc" placeholder="Description courte..."></textarea></div>
+    <div class="form-group"><label class="form-label">Statut</label><select id="prod-status"><option>Disponible</option><option>Rupture</option><option>Archivé</option></select></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal('product-modal')">Annuler</button>
+      <button class="btn-primary" onclick="saveProduct()">Enregistrer le produit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const orders=[
+  {id:'#0042',name:'Lalaina Rakoto',product:'Robe Fleurie × 2',phone:'034 12 345 67',amount:'50 000 Ar',status:'Nouvelle',date:'31 mai'},
+  {id:'#0041',name:'Haingotiana Rasolofonirina',product:'Escarpin Noir 38',phone:'033 87 654 32',amount:'35 000 Ar',status:'Confirmée',date:'31 mai'},
+  {id:'#0040',name:'Mirana Rasendra',product:'Sac Cuir Caramel',phone:'032 55 111 22',amount:'45 000 Ar',status:'En livraison',date:'30 mai'},
+  {id:'#0039',name:'Voahangy Andria',product:'Collier Doré',phone:'034 77 888 99',amount:'12 000 Ar',status:'Livrée',date:'30 mai'},
+  {id:'#0038',name:'Sandrine Razafy',product:'Ensemble Wax L',phone:'033 22 333 44',amount:'55 000 Ar',status:'Livrée',date:'29 mai'},
+  {id:'#0037',name:'Bakoly Ramanantsoa',product:'Robe Fleurie × 1',phone:'032 66 777 88',amount:'25 000 Ar',status:'Annulée',date:'29 mai'},
+];
+const products=[
+  {name:'Robe Fleurie',category:'Robes',price:'25 000 Ar',stock:1,status:'Disponible',link:'bazar.app/p/rF3k1'},
+  {name:'Sac Cuir Caramel',category:'Sacs',price:'45 000 Ar',stock:0,status:'Rupture',link:'bazar.app/p/sC9m2'},
+  {name:'Escarpin Noir 38',category:'Chaussures',price:'35 000 Ar',stock:8,status:'Disponible',link:'bazar.app/p/eN7p3'},
+  {name:'Collier Doré',category:'Bijoux',price:'12 000 Ar',stock:15,status:'Disponible',link:'bazar.app/p/cD2x4'},
+  {name:'Ensemble Wax L',category:'Ensembles',price:'55 000 Ar',stock:2,status:'Disponible',link:'bazar.app/p/eW5j5'},
+  {name:'Bracelet Argent',category:'Bijoux',price:'8 500 Ar',stock:20,status:'Disponible',link:'bazar.app/p/bA1k6'},
+];
+const statusClass={Nouvelle:'s-new',Confirmée:'s-conf','En livraison':'s-live',Livrée:'s-done',Annulée:'s-cancel'};
+const prodStatusClass={Disponible:'tag-avail',Rupture:'tag-rupture',Archivé:'tag-archive'};
+
+function renderOrders(data){
+  const tb=document.getElementById('orders-tbody');
+  tb.innerHTML=data.map(o=>`<tr>
+    <td><b>${o.name}</b></td>
+    <td>${o.product}</td>
+    <td><a href="tel:${o.phone}" style="color:var(--navy);text-decoration:none">${o.phone}</a></td>
+    <td style="font-weight:600">${o.amount}</td>
+    <td><select class="status-select" style="padding:4px 8px;font-size:11px;width:auto" onchange="updateStatus(this,'${o.id}')">
+      ${['Nouvelle','Confirmée','En livraison','Livrée','Annulée'].map(s=>`<option${s===o.status?' selected':''}>${s}</option>`).join('')}
+    </select></td>
+    <td style="color:var(--slate);font-size:12px">${o.date}</td>
+    <td><div class="action-btns">
+      <button class="action-btn" title="Voir détail" onclick='openOrder(${JSON.stringify(o)})'><i class="ti ti-eye" aria-hidden="true"></i></button>
+      <button class="action-btn wa" title="WhatsApp" onclick="waMsg('${o.name}','${o.product}','${o.amount}')"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i></button>
+      <button class="action-btn" title="Appeler" onclick="window.open('tel:${o.phone}')"><i class="ti ti-phone" aria-hidden="true"></i></button>
+    </div></td>
+  </tr>`).join('');
+}
+
+function renderMiniOrders(){
+  const c=document.getElementById('orders-mini');
+  c.innerHTML=orders.slice(0,4).map(o=>`<div class="order-row" onclick='openOrder(${JSON.stringify(o)})'>
+    <div class="order-avatar">${o.name.split(' ').map(w=>w[0]).slice(0,2).join('')}</div>
+    <div class="order-info"><div class="order-name">${o.name}</div><div class="order-prod">${o.product}</div></div>
+    <div class="order-right"><div class="order-price">${o.amount}</div><span class="status-badge ${statusClass[o.status]}">${o.status}</span></div>
+  </div>`).join('');
+}
+
+function renderProducts(data){
+  const tb=document.getElementById('products-tbody');
+  tb.innerHTML=data.map(p=>{
+    const pct=p.stock===0?0:Math.min(100,p.stock*10);
+    const barColor=p.stock===0?'#E24B4A':p.stock<=2?var_gold:'#1D9E75';
+    return `<tr>
+    <td><div class="prod-row"><div class="prod-img" aria-hidden="true">${p.name[0]}</div><span>${p.name}</span></div></td>
+    <td style="color:var(--slate)">${p.category}</td>
+    <td style="font-weight:600">${p.price}</td>
+    <td><div style="display:flex;align-items:center;gap:8px"><div class="stock-bar-wrap"><div class="stock-bar" style="width:${pct}%;background:${p.stock===0?'#E24B4A':p.stock<=2?'#EF9F27':'#1D9E75'}"></div></div><span style="font-size:12px;color:var(--slate)">${p.stock}</span></div></td>
+    <td><span class="tag ${prodStatusClass[p.status]}">${p.status}</span></td>
+    <td><div class="link-copy" style="font-size:10px;padding:3px 8px"><span>${p.link}</span><button class="copy-btn" onclick="this.textContent='✓'">Copier</button></div></td>
+    <td><div class="action-btns">
+      <button class="action-btn" title="Modifier" onclick="editProduct('${p.name}')"><i class="ti ti-edit" aria-hidden="true"></i></button>
+      <button class="action-btn" title="QR Code"><i class="ti ti-qrcode" aria-hidden="true"></i></button>
+      <button class="action-btn" title="Supprimer" style="color:#E24B4A;border-color:rgba(226,75,74,0.3)"><i class="ti ti-trash" aria-hidden="true"></i></button>
+    </div></td>
+  </tr>`;}).join('');
+}
+
+var_gold='#F5A623';
+
+function filterOrders(status,btn){
+  document.querySelectorAll('#page-orders .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderOrders(status==='all'?orders:orders.filter(o=>o.status===status));
+}
+function filterProds(status,btn){
+  document.querySelectorAll('#page-products .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts(status==='all'?products:products.filter(p=>p.status===status));
+}
+function filterProducts(q){
+  renderProducts(products.filter(p=>p.name.toLowerCase().includes(q.toLowerCase())));
+}
+
+function openOrder(o){
+  document.getElementById('order-detail-content').innerHTML=`
+    <div style="display:grid;gap:8px;font-size:13px">
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--slate)">Commande</span><b>${o.id}</b></div>
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--slate)">Client</span><span>${o.name}</span></div>
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--slate)">Produit</span><span>${o.product}</span></div>
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--slate)">Téléphone</span><a href="tel:${o.phone}" style="color:var(--navy)">${o.phone}</a></div>
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--slate)">Montant</span><b style="color:var(--gold)">${o.amount}</b></div>
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--slate)">Statut</span><span class="status-badge ${statusClass[o.status]}">${o.status}</span></div>
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--slate)">Date</span><span>${o.date}</span></div>
+    </div>`;
+  document.getElementById('wa-btn').onclick=()=>waMsg(o.name,o.product,o.amount);
+  document.getElementById('order-modal').classList.add('open');
+}
+
+function waMsg(name,prod,amount){
+  const msg=encodeURIComponent(`Bonjour ${name}, votre commande "${prod}" d'un montant de ${amount} a été confirmée. Merci de votre confiance ! — Rova Fashions`);
+  window.open(`https://wa.me/?text=${msg}`);
+}
+
+function openAddProduct(){
+  document.getElementById('product-modal-title').textContent='Nouveau produit';
+  document.getElementById('product-modal').classList.add('open');
+}
+function editProduct(name){
+  document.getElementById('product-modal-title').textContent='Modifier : '+name;
+  document.getElementById('prod-name').value=name;
+  document.getElementById('product-modal').classList.add('open');
+}
+function saveProduct(){
+  const name=document.getElementById('prod-name').value;
+  if(!name){alert('Nom requis');return;}
+  closeModal('product-modal');
+  showPage('products');
+}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const titles={overview:'Tableau de bord',orders:'Commandes',products:'Produits',analytics:'Statistiques',notifications:'Notifications',settings:'Paramètres'};
+  document.getElementById('page-title').textContent=titles[id]||'';
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+id+"'"))n.classList.add('active');
+  });
+}
+
+renderMiniOrders();
+renderOrders(orders);
+renderProducts(products);
+</script>

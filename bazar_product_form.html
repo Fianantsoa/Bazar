@@ -1,0 +1,513 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #1E2D3D;
+  --gold: #F5A623;
+  --sand: #F5F5F0;
+  --slate: #6B7A8D;
+  --navy-light: rgba(30,45,61,0.06);
+}
+body { font-family: var(--font-sans); }
+.form-shell {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+}
+.form-header {
+  background: var(--navy);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo-badge {
+  width: 36px; height: 36px;
+  background: var(--gold);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: Georgia, serif;
+  font-size: 20px; font-weight: 700;
+  color: var(--navy);
+  flex-shrink: 0;
+}
+.form-header-text { flex: 1; }
+.form-header-text h2 {
+  font-size: 15px; font-weight: 500; color: #fff; margin: 0 0 2px;
+}
+.form-header-text p {
+  font-size: 12px; color: #8A9BB0; margin: 0;
+}
+.status-badge {
+  font-size: 11px; padding: 4px 10px;
+  border-radius: 20px;
+  border: 0.5px solid rgba(245,166,35,0.4);
+  color: var(--gold);
+}
+.form-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; }
+.section-title {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--slate);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding-bottom: 10px;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+  margin-bottom: 4px;
+}
+.field-group { display: flex; flex-direction: column; gap: 5px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+label {
+  font-size: 13px; font-weight: 500;
+  color: var(--color-text-primary);
+  display: flex; align-items: center; gap: 6px;
+}
+label .req { color: var(--gold); font-size: 14px; line-height: 1; }
+label i { font-size: 15px; color: var(--slate); }
+input[type=text], input[type=number], textarea, select {
+  width: 100%;
+  padding: 9px 12px;
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--border-radius-md);
+  font-size: 14px;
+  font-family: var(--font-sans);
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
+  transition: border-color 0.15s;
+  outline: none;
+}
+input[type=text]:focus, input[type=number]:focus, textarea:focus, select:focus {
+  border-color: var(--navy);
+  box-shadow: 0 0 0 3px rgba(30,45,61,0.08);
+}
+textarea { resize: vertical; min-height: 88px; line-height: 1.6; }
+.hint { font-size: 12px; color: var(--slate); }
+
+.photo-zone {
+  border: 1px dashed var(--color-border-secondary);
+  border-radius: var(--border-radius-md);
+  padding: 1.25rem;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  background: var(--color-background-secondary);
+}
+.photo-zone:hover { border-color: var(--navy); background: var(--navy-light); }
+.photo-zone i { font-size: 28px; color: var(--slate); margin-bottom: 8px; display: block; }
+.photo-zone p { font-size: 13px; color: var(--slate); margin: 0 0 4px; }
+.photo-zone span { font-size: 11px; color: var(--slate); opacity: 0.7; }
+.photo-preview { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.photo-thumb {
+  width: 64px; height: 64px;
+  border-radius: 8px;
+  background: var(--color-background-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--slate);
+  position: relative; cursor: default;
+  overflow: hidden;
+}
+.photo-thumb.filled { border-color: var(--navy); background: var(--navy-light); }
+.photo-thumb.filled .thumb-label { font-size: 10px; color: var(--navy); font-weight: 500; }
+.photo-thumb.add-more {
+  border-style: dashed;
+  cursor: pointer;
+  color: var(--slate);
+}
+.photo-thumb.add-more:hover { border-color: var(--navy); color: var(--navy); }
+.main-badge {
+  position: absolute; top: 0; left: 0; right: 0;
+  background: var(--gold);
+  font-size: 9px; font-weight: 500; color: var(--navy);
+  text-align: center; padding: 2px 0;
+}
+.thumb-x {
+  position: absolute; top: 3px; right: 3px;
+  width: 16px; height: 16px;
+  background: rgba(30,45,61,0.7); color: #fff;
+  border-radius: 50%; font-size: 9px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+
+.price-input-wrap { position: relative; }
+.price-input-wrap input { padding-left: 38px; }
+.currency-tag {
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  font-size: 12px; color: var(--slate); font-weight: 500;
+  pointer-events: none;
+}
+
+.stock-wrap { display: flex; gap: 8px; align-items: center; }
+.stock-wrap input { flex: 1; }
+.stock-unit { font-size: 13px; color: var(--slate); white-space: nowrap; }
+
+.status-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 0.5px solid var(--color-border-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  background: var(--color-background-primary);
+  color: var(--color-text-secondary);
+  transition: all 0.15s;
+}
+.chip:hover { border-color: var(--navy); color: var(--navy); }
+.chip.active-available { background: #EAF3DE; border-color: #639922; color: #3B6D11; }
+.chip.active-rupture { background: #FCEBEB; border-color: #E24B4A; color: #A32D2D; }
+.chip.active-archive { background: var(--color-background-secondary); border-color: var(--color-border-primary); color: var(--color-text-secondary); }
+
+.stock-alert-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px;
+  background: var(--color-background-secondary);
+  border-radius: var(--border-radius-md);
+  border: 0.5px solid var(--color-border-tertiary);
+}
+.stock-alert-row label { font-size: 13px; color: var(--color-text-secondary); cursor: pointer; margin: 0; }
+.stock-alert-row input[type=number] { width: 70px; padding: 5px 8px; font-size: 13px; }
+
+.link-preview {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 12px;
+  background: var(--color-background-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-md);
+}
+.link-preview i { font-size: 15px; color: var(--slate); flex-shrink: 0; }
+.link-preview span { font-size: 13px; color: var(--color-text-secondary); flex: 1; font-family: var(--font-mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.copy-btn {
+  font-size: 12px; padding: 4px 10px;
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: 6px; background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer; white-space: nowrap;
+  display: flex; align-items: center; gap: 5px;
+}
+.copy-btn:hover { border-color: var(--navy); color: var(--navy); background: var(--navy-light); }
+.copy-btn.copied { border-color: #639922; color: #3B6D11; background: #EAF3DE; }
+
+.form-footer {
+  display: flex; gap: 10px; padding: 1rem 1.5rem;
+  border-top: 0.5px solid var(--color-border-tertiary);
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+.btn-secondary {
+  padding: 9px 18px;
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--border-radius-md);
+  background: transparent;
+  font-size: 14px; color: var(--color-text-secondary);
+  cursor: pointer; transition: all 0.15s;
+}
+.btn-secondary:hover { background: var(--color-background-secondary); }
+.btn-primary {
+  padding: 9px 22px;
+  border: none;
+  border-radius: var(--border-radius-md);
+  background: var(--navy);
+  font-size: 14px; font-weight: 500; color: #fff;
+  cursor: pointer; transition: all 0.15s;
+  display: flex; align-items: center; gap: 8px;
+}
+.btn-primary:hover { background: #162230; }
+.btn-primary:active { transform: scale(0.98); }
+.btn-danger-ghost {
+  padding: 9px 18px;
+  border: 0.5px solid var(--color-border-danger);
+  border-radius: var(--border-radius-md);
+  background: transparent;
+  font-size: 14px; color: var(--color-text-danger);
+  cursor: pointer; transition: all 0.15s; margin-right: auto;
+}
+.btn-danger-ghost:hover { background: var(--color-background-danger); }
+.char-count { font-size: 11px; color: var(--slate); text-align: right; }
+</style>
+
+<h2 class="sr-only">Formulaire d'ajout et d'édition de produit pour Bazar.app</h2>
+
+<div class="form-shell">
+  <div class="form-header">
+    <div class="logo-badge">B</div>
+    <div class="form-header-text">
+      <h2>Nouveau produit</h2>
+      <p>Boutique — Chez Nadia Mode</p>
+    </div>
+    <span class="status-badge"><i class="ti ti-circle-dot" aria-hidden="true" style="font-size:10px;margin-right:4px"></i>Brouillon</span>
+  </div>
+
+  <div class="form-body">
+
+    <div>
+      <div class="section-title"><i class="ti ti-package" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"></i>Informations du produit</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+
+        <div class="field-group">
+          <label><i class="ti ti-tag" aria-hidden="true"></i>Nom du produit <span class="req">*</span></label>
+          <input type="text" id="prod-name" placeholder="Ex : Robe Wax Ankara bleue" maxlength="80" oninput="updateSlug(this.value);updateCharCount('prod-name','name-count',80)" />
+          <div style="display:flex;justify-content:space-between">
+            <span class="hint">Soyez précis pour faciliter la recherche</span>
+            <span class="char-count" id="name-count">0 / 80</span>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label><i class="ti ti-align-left" aria-hidden="true"></i>Description</label>
+          <textarea id="prod-desc" placeholder="Décrivez votre produit : matière, taille disponible, caractéristiques..." maxlength="600" oninput="updateCharCount('prod-desc','desc-count',600)"></textarea>
+          <div style="display:flex;justify-content:flex-end">
+            <span class="char-count" id="desc-count">0 / 600</span>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label><i class="ti ti-folder" aria-hidden="true"></i>Catégorie <span class="req">*</span></label>
+            <select>
+              <option value="">Choisir une catégorie</option>
+              <option>Vêtements femme</option>
+              <option>Vêtements homme</option>
+              <option>Chaussures</option>
+              <option>Accessoires</option>
+              <option>Électronique</option>
+              <option>Maison & Déco</option>
+              <option>Beauté & Soins</option>
+              <option>+ Créer une catégorie</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label><i class="ti ti-category" aria-hidden="true"></i>Sous-catégorie</label>
+            <select>
+              <option value="">Aucune</option>
+              <option>Robes</option>
+              <option>Hauts</option>
+              <option>Jupes</option>
+              <option>Pantalons</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title"><i class="ti ti-photo" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"></i>Photos du produit <span style="font-weight:400;font-size:11px;color:var(--slate)">— jusqu'à 5 images</span></div>
+      <div class="photo-zone" onclick="addPhoto()" id="drop-zone">
+        <i class="ti ti-cloud-upload" aria-hidden="true"></i>
+        <p>Glissez vos photos ici ou cliquez pour parcourir</p>
+        <span>JPG, PNG, WebP · Max 5 Mo par image</span>
+      </div>
+      <div class="photo-preview" id="photo-preview">
+        <div class="photo-thumb filled">
+          <div class="main-badge">Principale</div>
+          <span class="thumb-label" style="margin-top:14px">Photo 1</span>
+          <div class="thumb-x" onclick="removePhoto(0)" aria-label="Retirer photo 1"><i class="ti ti-x" style="font-size:8px"></i></div>
+        </div>
+        <div class="photo-thumb filled">
+          <span class="thumb-label">Photo 2</span>
+          <div class="thumb-x" onclick="removePhoto(1)" aria-label="Retirer photo 2"><i class="ti ti-x" style="font-size:8px"></i></div>
+        </div>
+        <div class="photo-thumb add-more" onclick="addPhoto()" aria-label="Ajouter une photo">
+          <i class="ti ti-plus" style="font-size:20px"></i>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title"><i class="ti ti-currency-dollar" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"></i>Prix & Stock</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="field-row">
+          <div class="field-group">
+            <label><i class="ti ti-tag" aria-hidden="true"></i>Prix de vente <span class="req">*</span></label>
+            <div class="price-input-wrap">
+              <span class="currency-tag">Ar</span>
+              <input type="number" id="prod-price" placeholder="0" min="0" oninput="updateLinkSlug()" />
+            </div>
+          </div>
+          <div class="field-group">
+            <label><i class="ti ti-tag-off" aria-hidden="true"></i>Prix barré <span style="font-weight:400;color:var(--slate);font-size:12px">(optionnel)</span></label>
+            <div class="price-input-wrap">
+              <span class="currency-tag">Ar</span>
+              <input type="number" placeholder="0" min="0" />
+            </div>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label><i class="ti ti-stack" aria-hidden="true"></i>Stock disponible <span class="req">*</span></label>
+          <div class="stock-wrap">
+            <input type="number" id="prod-stock" placeholder="0" min="0" value="" oninput="checkStockAlert()" />
+            <span class="stock-unit">unités</span>
+          </div>
+        </div>
+
+        <div class="stock-alert-row">
+          <i class="ti ti-bell" aria-hidden="true" style="font-size:16px;color:var(--gold)"></i>
+          <label for="alert-qty" style="flex:1;color:var(--color-text-primary)">Alerte stock faible en dessous de</label>
+          <input type="number" id="alert-qty" value="5" min="1" />
+          <span class="stock-unit">unités</span>
+        </div>
+
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title"><i class="ti ti-toggle-left" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"></i>Statut du produit</div>
+      <div class="status-chips">
+        <button class="chip active-available" onclick="selectStatus(this,'active-available')" aria-pressed="true">
+          <i class="ti ti-circle-check" aria-hidden="true" style="margin-right:5px;font-size:13px"></i>Disponible
+        </button>
+        <button class="chip" onclick="selectStatus(this,'active-rupture')" aria-pressed="false">
+          <i class="ti ti-circle-x" aria-hidden="true" style="margin-right:5px;font-size:13px"></i>En rupture
+        </button>
+        <button class="chip" onclick="selectStatus(this,'active-archive')" aria-pressed="false">
+          <i class="ti ti-archive" aria-hidden="true" style="margin-right:5px;font-size:13px"></i>Archivé
+        </button>
+      </div>
+      <p class="hint" style="margin-top:8px">Les produits archivés ne sont plus visibles sur votre boutique.</p>
+    </div>
+
+    <div>
+      <div class="section-title"><i class="ti ti-link" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"></i>Lien produit partageable</div>
+      <div class="link-preview" id="link-preview-box">
+        <i class="ti ti-link" aria-hidden="true"></i>
+        <span id="link-display">bazar.app/p/...</span>
+        <button class="copy-btn" id="copy-btn" onclick="copyLink()">
+          <i class="ti ti-copy" aria-hidden="true"></i>Copier
+        </button>
+      </div>
+      <p class="hint" style="margin-top:6px">Ce lien sera généré à la sauvegarde du produit et pourra être partagé sur Facebook, TikTok ou WhatsApp.</p>
+    </div>
+
+  </div>
+
+  <div class="form-footer">
+    <button class="btn-danger-ghost"><i class="ti ti-trash" aria-hidden="true" style="margin-right:6px"></i>Supprimer</button>
+    <button class="btn-secondary">Annuler</button>
+    <button class="btn-secondary" onclick="saveDraft()">
+      <i class="ti ti-device-floppy" aria-hidden="true" style="margin-right:6px"></i>Enregistrer brouillon
+    </button>
+    <button class="btn-primary" onclick="saveProduct()">
+      <i class="ti ti-check" aria-hidden="true"></i>Publier le produit
+    </button>
+  </div>
+</div>
+
+<script>
+let photoCount = 2;
+let currentStatus = 'active-available';
+
+function updateCharCount(inputId, countId, max) {
+  const el = document.getElementById(inputId);
+  const count = document.getElementById(countId);
+  if (!el || !count) return;
+  const len = el.value.length;
+  count.textContent = len + ' / ' + max;
+  count.style.color = len > max * 0.9 ? '#E24B4A' : '';
+}
+
+function slugify(str) {
+  return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-').substring(0,20);
+}
+
+function updateSlug(val) {
+  const s = slugify(val);
+  const base = 'bazar.app/p/';
+  document.getElementById('link-display').textContent = s ? base + s : base + '...';
+}
+
+function copyLink() {
+  const txt = document.getElementById('link-display').textContent;
+  const btn = document.getElementById('copy-btn');
+  if (navigator.clipboard) navigator.clipboard.writeText(txt).catch(() => {});
+  btn.classList.add('copied');
+  btn.innerHTML = '<i class="ti ti-check" aria-hidden="true"></i>Copié !';
+  setTimeout(() => {
+    btn.classList.remove('copied');
+    btn.innerHTML = '<i class="ti ti-copy" aria-hidden="true"></i>Copier';
+  }, 2000);
+}
+
+function selectStatus(el, cls) {
+  document.querySelectorAll('.chip').forEach(c => {
+    c.classList.remove('active-available','active-rupture','active-archive');
+    c.setAttribute('aria-pressed','false');
+  });
+  el.classList.add(cls);
+  el.setAttribute('aria-pressed','true');
+  currentStatus = cls;
+}
+
+function addPhoto() {
+  if (photoCount >= 5) return;
+  photoCount++;
+  const preview = document.getElementById('photo-preview');
+  const addBtn = preview.querySelector('.add-more');
+  const thumb = document.createElement('div');
+  thumb.className = 'photo-thumb filled';
+  const idx = photoCount - 1;
+  thumb.innerHTML = '<span class="thumb-label">Photo ' + photoCount + '</span>'
+    + '<div class="thumb-x" onclick="removePhoto(' + idx + ')" aria-label="Retirer photo ' + photoCount + '"><i class="ti ti-x" style="font-size:8px"></i></div>';
+  preview.insertBefore(thumb, addBtn);
+  if (photoCount >= 5) addBtn.style.display = 'none';
+}
+
+function removePhoto(idx) {
+  const thumbs = document.querySelectorAll('.photo-thumb.filled');
+  if (thumbs[idx]) {
+    thumbs[idx].remove();
+    photoCount = Math.max(photoCount - 1, 0);
+    const addBtn = document.querySelector('.photo-thumb.add-more');
+    if (addBtn) addBtn.style.display = '';
+    renumberPhotos();
+  }
+}
+
+function renumberPhotos() {
+  document.querySelectorAll('.photo-thumb.filled').forEach((t, i) => {
+    const label = t.querySelector('.thumb-label');
+    if (label) label.textContent = 'Photo ' + (i + 1);
+    const main = t.querySelector('.main-badge');
+    if (i === 0 && !main) {
+      const badge = document.createElement('div');
+      badge.className = 'main-badge'; badge.textContent = 'Principale';
+      t.insertBefore(badge, t.firstChild);
+    } else if (i !== 0 && main) { main.remove(); }
+  });
+}
+
+function checkStockAlert() {}
+
+function saveDraft() {
+  const header = document.querySelector('.form-header-text h2');
+  header.textContent = 'Brouillon sauvegardé';
+  setTimeout(() => { header.textContent = 'Nouveau produit'; }, 2000);
+}
+
+function saveProduct() {
+  const name = document.getElementById('prod-name').value.trim();
+  if (!name) {
+    document.getElementById('prod-name').focus();
+    document.getElementById('prod-name').style.borderColor = '#E24B4A';
+    setTimeout(() => { document.getElementById('prod-name').style.borderColor = ''; }, 2000);
+    return;
+  }
+  const price = document.getElementById('prod-price').value;
+  if (!price || parseFloat(price) <= 0) {
+    document.getElementById('prod-price').focus();
+    document.getElementById('prod-price').style.borderColor = '#E24B4A';
+    setTimeout(() => { document.getElementById('prod-price').style.borderColor = ''; }, 2000);
+    return;
+  }
+  const btn = document.querySelector('.btn-primary');
+  btn.innerHTML = '<i class="ti ti-check" aria-hidden="true"></i>Publié !';
+  btn.style.background = '#3B6D11';
+  setTimeout(() => {
+    btn.innerHTML = '<i class="ti ti-check" aria-hidden="true"></i>Publier le produit';
+    btn.style.background = '';
+  }, 2500);
+}
+</script>
